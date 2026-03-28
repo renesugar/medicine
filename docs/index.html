@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microvascular Medicine — Clinical Research Series</title>
+<meta name="description" content="Clinical frameworks, diagnostic guides, and treatment protocols for translational medicine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --step1: #2E7D32;  --step1-light: #E8F5E9;
+  --step2: #E65100;  --step2-light: #FFF3E0;
+  --step3: #1565C0;  --step3-light: #E3F2FD;
+  --step4: #B71C1C;  --step4-light: #FFEBEE;
+  --ssri:  #00695C;  --ssri-light:  #E0F2F1;
+  --covid: #4527A0;  --covid-light: #EDE7F6;
+  --ink:      #1A1A2E;
+  --ink-mid:  #37474F;
+  --ink-light:#607D8B;
+  --rule:     #CFD8DC;
+  --surface:  #FAFAFA;
+  --surface-alt: #F0F4F8;
+  --white:    #FFFFFF;
+  --accent:   #B71C1C;
+  --nav-bg:   #0D1B2A;
+  --nav-accent: #4FC3F7;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.10);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-hover: 0 8px 28px rgba(0,0,0,0.16);
+  --radius: 6px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  background: var(--surface); color: var(--ink); line-height: 1.6;
+  display: flex; min-height: 100vh;
+}
+
+/* ── Sidebar ───────────────────────────────────────────────────────────── */
+.site-nav {
+  position: fixed; top: 0; left: 0;
+  width: 240px; height: 100vh;
+  background: var(--nav-bg); overflow-y: auto; z-index: 100;
+  padding-bottom: 2rem; display: flex; flex-direction: column;
+  transition: transform 0.25s ease;
+}
+
+.nav-brand {
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 0.5rem; display: block; text-decoration: none;
+}
+
+.nav-brand:hover { background: rgba(255,255,255,0.04); }
+
+.nav-brand-title {
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--nav-accent); line-height: 1.4;
+}
+
+.nav-brand-sub {
+  font-size: 0.62rem; color: rgba(255,255,255,0.35); margin-top: 0.25rem;
+}
+
+.nav-section-label {
+  padding: 1rem 1.25rem 0.3rem;
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.22);
+}
+
+.nav-link {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  padding: 0.5rem 1.25rem; text-decoration: none;
+  color: rgba(255,255,255,0.55); font-size: 0.73rem;
+  font-weight: 400; line-height: 1.35; transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--white); background: rgba(255,255,255,0.05);
+  border-left-color: var(--nav-accent);
+}
+
+.nav-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; color: rgba(255,255,255,0.25);
+  flex-shrink: 0; margin-top: 0.08rem;
+}
+
+/* ── Main ──────────────────────────────────────────────────────────────── */
+.site-main { margin-left: 240px; flex: 1; }
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #0D1B2A 0%, #1A3A5C 55%, #0D2B3F 100%);
+  padding: 4rem 4rem 3.5rem; position: relative; overflow: hidden;
+}
+
+.hero::before {
+  content: ''; position: absolute; top: -80px; right: -80px;
+  width: 420px; height: 420px;
+  border: 80px solid rgba(79,195,247,0.06); border-radius: 50%;
+}
+
+.hero::after {
+  content: ''; position: absolute; bottom: -50px; left: 28%;
+  width: 220px; height: 220px;
+  border: 44px solid rgba(79,195,247,0.04); border-radius: 50%;
+}
+
+.hero-eyebrow {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--nav-accent); margin-bottom: 1rem;
+  position: relative; z-index: 1;
+}
+
+.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 3rem; line-height: 1.1; color: white;
+  margin-bottom: 0.75rem; max-width: 640px;
+  position: relative; z-index: 1;
+}
+
+.hero-desc {
+  font-size: 0.95rem; color: rgba(255,255,255,0.6);
+  max-width: 560px; line-height: 1.65; margin-bottom: 2.5rem;
+  position: relative; z-index: 1;
+}
+
+.hero-stats {
+  display: flex; gap: 2rem; flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+
+.hero-stat {
+  text-align: left;
+}
+
+.hero-stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2rem; color: white; line-height: 1;
+}
+
+.hero-stat-label {
+  font-size: 0.72rem; color: rgba(255,255,255,0.45);
+  text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.15rem;
+}
+
+/* ── Content area ──────────────────────────────────────────────────────── */
+.content-area {
+  max-width: 1060px; margin: 0 auto; padding: 3rem 4rem;
+}
+
+/* ── Section headers ───────────────────────────────────────────────────── */
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 1.5rem; padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--rule);
+}
+
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.5rem; color: var(--ink);
+}
+
+.section-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem; color: var(--ink-light); font-weight: 500;
+}
+
+/* ── Article Cards ─────────────────────────────────────────────────────── */
+.article-grid {
+  display: grid; gap: 1.25rem; margin-bottom: 3rem;
+}
+
+.article-card {
+  background: white; border: 1px solid var(--rule);
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: var(--shadow-sm); text-decoration: none; display: block;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  position: relative;
+}
+
+.article-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.article-card-inner {
+  display: grid; grid-template-columns: 5px 1fr;
+}
+
+.article-card-stripe {
+  width: 100%; min-height: 100%;
+}
+
+.article-card-body {
+  padding: 1.5rem 1.75rem;
+}
+
+.article-card-meta {
+  display: flex; align-items: center; gap: 0.6rem;
+  flex-wrap: wrap; margin-bottom: 0.75rem;
+}
+
+.meta-series {
+  font-size: 0.62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-light);
+}
+
+.meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--rule); }
+
+.meta-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem; color: var(--ink-light);
+}
+
+.meta-type {
+  font-size: 0.62rem; font-weight: 600; padding: 0.1rem 0.5rem;
+  border-radius: 100px; text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+.article-card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.35rem; line-height: 1.25; color: var(--ink);
+  margin-bottom: 0.35rem; transition: color 0.15s;
+}
+
+.article-card:hover .article-card-title { color: var(--step3); }
+
+.article-card-subtitle {
+  font-family: 'DM Serif Display', serif; font-style: italic;
+  font-size: 0.9rem; color: var(--ink-light);
+  margin-bottom: 0.85rem; line-height: 1.45;
+}
+
+.article-card-desc {
+  font-size: 0.85rem; color: var(--ink-mid); line-height: 1.65;
+  margin-bottom: 1.1rem;
+}
+
+.article-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 0.75rem;
+}
+
+.article-tags {
+  display: flex; gap: 0.4rem; flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 0.65rem; font-weight: 600; padding: 0.2rem 0.6rem;
+  border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.tag-step1 { background: var(--step1-light); color: var(--step1); }
+.tag-step2 { background: var(--step2-light); color: var(--step2); }
+.tag-step3 { background: var(--step3-light); color: var(--step3); }
+.tag-step4 { background: var(--step4-light); color: var(--step4); }
+.tag-ssri  { background: var(--ssri-light);  color: var(--ssri); }
+.tag-covid { background: var(--covid-light); color: var(--covid); }
+.tag-default { background: var(--surface-alt); color: var(--ink-light); }
+
+.article-card-cta {
+  font-size: 0.78rem; font-weight: 600; color: var(--step3);
+  display: flex; align-items: center; gap: 0.3rem;
+  white-space: nowrap;
+}
+
+.article-card-cta::after {
+  content: '→'; font-size: 0.85rem;
+  transition: transform 0.15s;
+}
+
+.article-card:hover .article-card-cta::after { transform: translateX(3px); }
+
+/* Featured card variant */
+.article-card.featured {
+  border-width: 1.5px;
+}
+
+.article-card.featured .article-card-title { font-size: 1.55rem; }
+
+.featured-badge {
+  position: absolute; top: 1rem; right: 1rem;
+  font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; padding: 0.2rem 0.6rem; border-radius: 100px;
+  background: var(--accent); color: white;
+}
+
+/* ── How to Add Articles box ───────────────────────────────────────────── */
+.add-article-box {
+  background: var(--nav-bg); border-radius: var(--radius-xl);
+  padding: 2rem 2.5rem; margin-bottom: 3rem;
+  position: relative; overflow: hidden;
+}
+
+.add-article-box::before {
+  content: ''; position: absolute; right: -40px; top: -40px;
+  width: 180px; height: 180px;
+  border: 36px solid rgba(79,195,247,0.08); border-radius: 50%;
+}
+
+.add-box-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.15rem; color: white; margin-bottom: 0.5rem;
+  position: relative; z-index: 1;
+}
+
+.add-box-desc {
+  font-size: 0.83rem; color: rgba(255,255,255,0.55); line-height: 1.6;
+  margin-bottom: 1.25rem; max-width: 640px; position: relative; z-index: 1;
+}
+
+.code-snippet {
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius); padding: 1rem 1.25rem;
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+  color: #A5D6A7; line-height: 1.6; position: relative; z-index: 1;
+  overflow-x: auto;
+}
+
+.code-comment { color: rgba(255,255,255,0.3); }
+.code-key     { color: #4FC3F7; }
+.code-val     { color: #CE93D8; }
+.code-str     { color: #A5D6A7; }
+
+/* ── Format grid ───────────────────────────────────────────────────────── */
+.format-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.format-card {
+  background: white; border: 1px solid var(--rule);
+  border-radius: var(--radius-lg); padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.format-icon {
+  width: 40px; height: 40px; border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; margin-bottom: 0.75rem;
+}
+
+.format-title {
+  font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem;
+}
+
+.format-desc {
+  font-size: 0.78rem; color: var(--ink-light); line-height: 1.55;
+}
+
+/* ── About strip ───────────────────────────────────────────────────────── */
+.about-strip {
+  background: white; border: 1px solid var(--rule);
+  border-radius: var(--radius-xl); padding: 1.75rem 2rem;
+  display: flex; gap: 1.5rem; align-items: flex-start;
+  margin-bottom: 2rem; box-shadow: var(--shadow-sm);
+}
+
+.about-strip-icon {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--step3), var(--step4));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 1.3rem; color: white;
+}
+
+.about-strip-title { font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+.about-strip-text  { font-size: 0.83rem; color: var(--ink-mid); line-height: 1.6; }
+.about-strip-link  { font-size: 0.78rem; color: var(--step3); text-decoration: none; }
+.about-strip-link:hover { text-decoration: underline; }
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--nav-bg); color: rgba(255,255,255,0.4);
+  padding: 2rem 4rem; font-size: 0.75rem; line-height: 1.65; text-align: center;
+}
+
+.site-footer p { margin-bottom: 0.25rem; }
+.site-footer a { color: var(--nav-accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+
+/* ── Mobile nav toggle ─────────────────────────────────────────────────── */
+.nav-toggle {
+  display: none; position: fixed; top: 1rem; left: 1rem;
+  z-index: 300; background: var(--nav-bg); color: white;
+  border: none; border-radius: 6px; padding: 0.5rem 0.75rem;
+  font-size: 1.1rem; cursor: pointer; box-shadow: var(--shadow-md);
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .site-nav { transform: translateX(-100%); }
+  .site-nav.open { transform: translateX(0); }
+  .site-main { margin-left: 0; }
+  .nav-toggle { display: block; }
+  .hero { padding: 4rem 1.5rem 3rem; }
+  .hero-title { font-size: 2rem; }
+  .content-area { padding: 2rem 1.25rem; }
+  .format-grid { grid-template-columns: 1fr; }
+  .about-strip { flex-direction: column; }
+}
+
+@media (min-width: 901px) {
+  .nav-toggle { display: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile nav toggle -->
+<button class="nav-toggle" id="nav-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+<!-- ── SIDEBAR ──────────────────────────────────────────────────────────── -->
+<nav class="site-nav" id="site-nav" aria-label="Site navigation">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-brand-title">Microvascular<br>Medicine</div>
+    <div class="nav-brand-sub">Clinical Research Series</div>
+  </a>
+
+  <div class="nav-section-label">Site</div>
+  <a href="index.html" class="nav-link active">
+    <span class="nav-num">—</span>
+    <span>All Articles</span>
+  </a>
+  <a href="#clinical-tools" class="nav-link">
+    <span class="nav-num">↓</span>
+    <span>Clinical Tools</span>
+  </a>
+  <a href="#how-i-diagnose" class="nav-link">
+    <span class="nav-num">↓</span>
+    <span>Narrative Articles</span>
+  </a>
+  <a href="#add-articles" class="nav-link">
+    <span class="nav-num">↓</span>
+    <span>Adding Articles</span>
+  </a>
+
+  <div class="nav-section-label">Articles</div>
+  <a href="articles/microvascular-workflow-pack.html" class="nav-link">
+    <span class="nav-num">01</span>
+    <span>Workflow Pack</span>
+  </a>
+  <a href="articles/how-i-diagnose-and-treat.html" class="nav-link">
+    <span class="nav-num">02</span>
+    <span>How I Diagnose &amp; Treat</span>
+  </a>
+  <a href="articles/sample-markdown-article.html" class="nav-link">
+    <span class="nav-num">03</span>
+    <span>Sample Markdown Article</span>
+  </a>
+</nav>
+
+<!-- ── MAIN ─────────────────────────────────────────────────────────────── -->
+<main class="site-main" role="main">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Clinical Research Series</div>
+  <h1 class="hero-title">Microvascular Medicine</h1>
+  <p class="hero-desc">Clinical frameworks, diagnostic guides, and treatment protocols for translational medicine.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">2</div>
+      <div class="hero-stat-label">Articles published</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">33</div>
+      <div class="hero-stat-label">Citations</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">4</div>
+      <div class="hero-stat-label">Pathological steps mapped</div>
+    </div>
+  </div>
+</div>
+
+<div class="content-area">
+
+  <!-- ── CLINICAL TOOLS ─────────────────────────────────────────────────── -->
+  <div id="clinical-tools">
+    <div class="section-header">
+      <h2 class="section-title">Clinical Tools</h2>
+      <span class="section-count">1 article</span>
+    </div>
+
+    <div class="article-grid">
+      <!-- Workflow Pack -->
+      <a href="articles/microvascular-workflow-pack.html" class="article-card featured">
+        <span class="featured-badge">Featured</span>
+        <div class="article-card-inner">
+          <div class="article-card-stripe" style="background:linear-gradient(to bottom,var(--step1),var(--step2),var(--step3),var(--step4))"></div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="meta-series">Clinical Workflow Pack</span>
+              <span class="meta-dot"></span>
+              <span class="meta-date">2025</span>
+              <span class="meta-dot"></span>
+              <span class="meta-type" style="background:var(--surface-alt);color:var(--ink-light)">Interactive Tool</span>
+            </div>
+            <div class="article-card-title">Microvascular Dysfunction — Clinical Workflow Pack</div>
+            <div class="article-card-subtitle">Auto-Scoring · Escalation Rules · SSRI Withdrawal · Long COVID</div>
+            <p class="article-card-desc">A complete clinical decision-support framework with auto-scoring system that assigns a dominant pathological step numerically, built-in escalation rules ("if X doesn't improve → do Y"), separate protocols for SSRI withdrawal and Long COVID, lab panel with LifeLabs and Labcorp codes, and an interactive patient assessment form.</p>
+            <div class="article-card-footer">
+              <div class="article-tags">
+                <span class="tag tag-ssri">SSRI Withdrawal</span>
+                <span class="tag tag-covid">Long COVID</span>
+                <span class="tag tag-step1">Endothelium</span>
+                <span class="tag tag-step2">Platelets</span>
+                <span class="tag tag-step3">Fibrin</span>
+                <span class="tag tag-step4">Fibrinolysis</span>
+              </div>
+              <span class="article-card-cta">Open tool</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── NARRATIVE ARTICLES ─────────────────────────────────────────────── -->
+  <div id="how-i-diagnose">
+    <div class="section-header">
+      <h2 class="section-title">Narrative Articles</h2>
+      <span class="section-count">2 articles</span>
+    </div>
+
+    <div class="article-grid">
+
+      <!-- How I Diagnose and Treat -->
+      <a href="articles/how-i-diagnose-and-treat.html" class="article-card">
+        <div class="article-card-inner">
+          <div class="article-card-stripe" style="background:var(--accent)"></div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="meta-series">How I Diagnose and Treat</span>
+              <span class="meta-dot"></span>
+              <span class="meta-date">2025</span>
+              <span class="meta-dot"></span>
+              <span class="meta-type" style="background:#FFF5F5;color:var(--accent)">Clinical Article</span>
+            </div>
+            <div class="article-card-title">How I Diagnose and Treat Microvascular Dysfunction in SSRI Withdrawal and Post-Viral Illness</div>
+            <div class="article-card-subtitle">A Mechanism-Based Approach to Endothelial Instability, Platelet Dysregulation, and Fibrinolytic Failure</div>
+            <p class="article-card-desc">A full clinical narrative article in the tradition of the "How I Diagnose and Treat" series. Covers the platelet-serotonin axis in SSRI withdrawal, the endothelial-fibrin axis in Long COVID, a four-step pathophysiological model, diagnostic criteria, laboratory evaluation with action thresholds, and treatment algorithms with 33 citations from the primary literature.</p>
+            <div class="article-card-footer">
+              <div class="article-tags">
+                <span class="tag tag-ssri">SSRI Withdrawal</span>
+                <span class="tag tag-covid">Long COVID</span>
+                <span class="tag tag-default">33 citations</span>
+                <span class="tag tag-default">~6,800 words</span>
+              </div>
+              <span class="article-card-cta">Read article</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Sample Markdown Article -->
+      <a href="articles/sample-markdown-article.html" class="article-card">
+        <div class="article-card-inner">
+          <div class="article-card-stripe" style="background:var(--step3)"></div>
+          <div class="article-card-body">
+            <div class="article-card-meta">
+              <span class="meta-series">Guide</span>
+              <span class="meta-dot"></span>
+              <span class="meta-date">2025</span>
+              <span class="meta-dot"></span>
+              <span class="meta-type" style="background:var(--step3-light);color:var(--step3)">Markdown</span>
+            </div>
+            <div class="article-card-title">Adding Articles in Markdown Format</div>
+            <div class="article-card-subtitle">A demonstration of how markdown files are rendered with the site's visual style</div>
+            <p class="article-card-desc">This sample article demonstrates how to write new content in plain Markdown and have it rendered automatically with the full site design — including the dark sidebar navigation, typography system, callout boxes, and table styling. Use this as a template for future articles.</p>
+            <div class="article-card-footer">
+              <div class="article-tags">
+                <span class="tag tag-default">Markdown</span>
+                <span class="tag tag-default">Template</span>
+                <span class="tag tag-default">Jekyll</span>
+              </div>
+              <span class="article-card-cta">View example</span>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ── CONTENT FORMAT GUIDE ───────────────────────────────────────────── -->
+  <div id="formats">
+    <div class="section-header">
+      <h2 class="section-title">Content Formats</h2>
+      <span class="section-count">3 supported</span>
+    </div>
+
+    <div class="format-grid">
+      <div class="format-card">
+        <div class="format-icon" style="background:var(--surface-alt);">📄</div>
+        <div class="format-title">Standalone HTML</div>
+        <div class="format-desc">Fully self-contained HTML files with embedded CSS. Best for rich interactive tools (like the workflow pack) with custom components, forms, and complex layouts. Place in <code>articles/</code> and link from the index.</div>
+      </div>
+      <div class="format-card">
+        <div class="format-icon" style="background:var(--step3-light);">📝</div>
+        <div class="format-title">Markdown via Jekyll</div>
+        <div class="format-desc">Write in plain Markdown with a YAML front matter block. Jekyll processes it through <code>_layouts/default.html</code>, applying the full site design automatically. Add front matter: <code>layout</code>, <code>title</code>, <code>date</code>, <code>series</code>.</div>
+      </div>
+      <div class="format-card">
+        <div class="format-icon" style="background:var(--step1-light);">🔗</div>
+        <div class="format-title">External Links</div>
+        <div class="format-desc">Link cards can point to external publications, preprints, or hosted documents. Add an <code>external: true</code> flag and <code>url</code> field when editing the index to render an external link card with the same visual treatment.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HOW TO ADD ARTICLES ────────────────────────────────────────────── -->
+  <div id="add-articles">
+    <div class="section-header">
+      <h2 class="section-title">Adding New Articles</h2>
+    </div>
+
+    <div class="add-article-box">
+      <div class="add-box-title">Adding a Markdown article</div>
+      <div class="add-box-desc">Create a <code>.md</code> file in the <code>articles/</code> directory with a YAML front matter block. Jekyll will render it with the full site layout automatically. Then add a new <code>&lt;a class="article-card"&gt;</code> block to <code>index.html</code>.</div>
+      <div class="code-snippet"><span class="code-comment">--- # YAML front matter (required)</span>
+<span class="code-key">layout</span><span>: </span><span class="code-str">default</span>
+<span class="code-key">title</span><span>: </span><span class="code-str">"Your Article Title"</span>
+<span class="code-key">subtitle</span><span>: </span><span class="code-str">"An italicised subtitle line"</span>
+<span class="code-key">series</span><span>: </span><span class="code-str">"How I Diagnose and Treat"</span>
+<span class="code-key">date</span><span>: </span><span class="code-val">2025-01-15</span>
+<span class="code-key">category</span><span>: </span><span class="code-str">"Clinical Article"</span>
+<span class="code-key">tags</span><span>: [</span><span class="code-str">"SSRI Withdrawal"</span><span>, </span><span class="code-str">"Long COVID"</span><span>]</span>
+<span class="code-key">description</span><span>: </span><span class="code-str">"A short description for the article card on the index page."</span>
+<span class="code-comment">---</span>
+
+<span class="code-comment"># Your article content in Markdown follows here...</span>
+<span class="code-comment"># Tables, blockquotes, code, and callouts all render with the site style.</span></div>
+    </div>
+
+    <div class="add-article-box" style="margin-top:1rem;background:#1A3A5C;">
+      <div class="add-box-title">Adding a standalone HTML article</div>
+      <div class="add-box-desc">Place your HTML file in <code>articles/</code>. For the sidebar nav to work correctly, add a back link to <code>../index.html</code> and update the nav links. Then add a card to <code>index.html</code> pointing to <code>articles/your-file.html</code>.</div>
+      <div class="code-snippet"><span class="code-comment">&lt;!-- In your article HTML, update the nav brand href --&gt;</span>
+&lt;<span class="code-key">a</span> href=<span class="code-str">"../index.html"</span> class=<span class="code-str">"nav-brand"</span>&gt;...&lt;/<span class="code-key">a</span>&gt;
+
+<span class="code-comment">&lt;!-- Add a back-to-index nav link --&gt;</span>
+&lt;<span class="code-key">a</span> href=<span class="code-str">"../index.html"</span> class=<span class="code-str">"nav-link"</span>&gt;← All Articles&lt;/<span class="code-key">a</span>&gt;</div>
+    </div>
+  </div>
+
+  <!-- ── ABOUT STRIP ────────────────────────────────────────────────────── -->
+  <div class="about-strip">
+    <div class="about-strip-icon">⚕</div>
+    <div>
+      <div class="about-strip-title">About this site</div>
+      <div class="about-strip-text">This site publishes clinical decision-support frameworks and narrative articles on microvascular medicine, with a particular focus on the overlap between SSRI withdrawal and post-viral illness. Content is based on emerging mechanistic research and is intended for clinician discussion only. It does not constitute medical advice. No clinical trials have validated these protocols as complete systems.</div>
+      <a href="about.html" class="about-strip-link">Read more about this project →</a>
+    </div>
+  </div>
+
+</div><!-- end content-area -->
+
+<footer class="site-footer">
+  <p style="color:rgba(255,255,255,0.7);font-weight:600;">Microvascular Medicine — Clinical Research Series</p>
+  <p>For educational and clinical-discussion use only · Not medical advice · All treatment decisions require individual clinician assessment</p>
+  <p style="margin-top:0.4rem;">
+    <a href="index.html">Home</a> ·
+    <a href="articles/microvascular-workflow-pack.html">Workflow Pack</a> ·
+    <a href="articles/how-i-diagnose-and-treat.html">How I Diagnose &amp; Treat</a> ·
+    <a href="about.html">About</a>
+  </p>
+</footer>
+
+</main>
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('site-nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
+      toggle.textContent = open ? '✕' : '☰';
+    });
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+        nav.classList.remove('open');
+        toggle.setAttribute('aria-expanded', false);
+        toggle.textContent = '☰';
+      }
+    });
+  }
+</script>
+</body>
+</html>

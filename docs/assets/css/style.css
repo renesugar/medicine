@@ -1,0 +1,271 @@
+/* ── Microvascular Medicine — Shared Site Styles ──────────────────────── */
+/* Used by _layouts/default.html and _layouts/article.html                 */
+
+/* ── Google Fonts import (also in layout head for reliability) ─────────── */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap');
+
+/* ── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+  --step1: #2E7D32;  --step1-light: #E8F5E9;
+  --step2: #E65100;  --step2-light: #FFF3E0;
+  --step3: #1565C0;  --step3-light: #E3F2FD;
+  --step4: #B71C1C;  --step4-light: #FFEBEE;
+  --ssri:  #00695C;  --ssri-light:  #E0F2F1;
+  --covid: #4527A0;  --covid-light: #EDE7F6;
+  --ink:      #1A1A2E;
+  --ink-mid:  #37474F;
+  --ink-light:#607D8B;
+  --rule:     #CFD8DC;
+  --surface:  #FAFAFA;
+  --surface-alt: #F0F4F8;
+  --white:    #FFFFFF;
+  --accent:   #B71C1C;
+  --nav-bg:   #0D1B2A;
+  --nav-accent: #4FC3F7;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.10);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --radius: 6px;
+  --radius-lg: 10px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar Nav ───────────────────────────────────────────────────────── */
+.site-nav {
+  position: fixed; top: 0; left: 0;
+  width: 240px; height: 100vh;
+  background: var(--nav-bg);
+  overflow-y: auto; z-index: 100;
+  padding-bottom: 2rem;
+  display: flex; flex-direction: column;
+}
+
+.nav-brand {
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  display: block;
+}
+
+.nav-brand:hover { background: rgba(255,255,255,0.04); }
+
+.nav-brand-title {
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--nav-accent); line-height: 1.4;
+}
+
+.nav-brand-sub {
+  font-size: 0.62rem; color: rgba(255,255,255,0.35); margin-top: 0.25rem;
+}
+
+.nav-section-label {
+  padding: 1rem 1.25rem 0.3rem;
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.22);
+}
+
+.site-nav a.nav-link {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  padding: 0.5rem 1.25rem;
+  text-decoration: none; color: rgba(255,255,255,0.55);
+  font-size: 0.73rem; font-weight: 400; line-height: 1.35;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+
+.site-nav a.nav-link:hover,
+.site-nav a.nav-link.active {
+  color: var(--white); background: rgba(255,255,255,0.05);
+  border-left-color: var(--nav-accent);
+}
+
+.nav-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; color: rgba(255,255,255,0.25);
+  flex-shrink: 0; margin-top: 0.08rem;
+}
+
+.nav-link-text { flex: 1; }
+.nav-link-badge {
+  font-size: 0.58rem; padding: 0.1rem 0.4rem; border-radius: 100px;
+  font-weight: 600; white-space: nowrap; flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+/* ── Main Content Area ─────────────────────────────────────────────────── */
+.site-main { margin-left: 240px; flex: 1; max-width: 100%; }
+
+/* ── Shared Table Styles ───────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto; margin: 1.25rem 0;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--rule);
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 0.82rem; background: white; }
+
+thead th {
+  padding: 0.65rem 0.9rem; text-align: left;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; white-space: nowrap;
+  border-bottom: 2px solid var(--rule);
+}
+
+tbody td {
+  padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--rule);
+  vertical-align: top; line-height: 1.45;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(0,0,0,0.015); }
+
+/* ── Callout / Alert ───────────────────────────────────────────────────── */
+.callout {
+  border-radius: var(--radius); padding: 0.9rem 1.1rem;
+  font-size: 0.83rem; line-height: 1.55; margin: 1.25rem 0;
+  border-left: 4px solid;
+}
+.callout strong { display: block; margin-bottom: 0.25rem; }
+.callout-warn   { background: #FFF8E1; border-color: #F9A825; color: #4A3300; }
+.callout-danger { background: #FFEBEE; border-color: #C62828; color: #5C0000; }
+.callout-info   { background: var(--step3-light); border-color: var(--step3); color: #0A2A5C; }
+.callout-tip    { background: var(--step1-light); border-color: var(--step1); color: #0A2E0F; }
+
+/* ── Markdown Article Rendering ────────────────────────────────────────── */
+.markdown-content {
+  max-width: 820px; margin: 0 auto; padding: 3rem 4rem;
+}
+
+.markdown-content h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.2rem; line-height: 1.15; color: var(--ink);
+  margin: 0 0 0.5rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.5rem;
+}
+
+.markdown-content h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.55rem; color: var(--ink);
+  margin: 2rem 0 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.markdown-content h3 {
+  font-family: 'DM Serif Display', serif; font-style: italic;
+  font-size: 1.18rem; color: var(--ink-mid);
+  margin: 1.5rem 0 0.4rem;
+}
+
+.markdown-content h4 {
+  font-size: 0.9rem; font-weight: 700; color: var(--ink-mid);
+  margin: 1.2rem 0 0.4rem;
+  padding-left: 0.75rem; border-left: 3px solid var(--rule);
+}
+
+.markdown-content p {
+  font-size: 0.92rem; line-height: 1.75;
+  color: var(--ink-mid); margin-bottom: 1rem; text-align: justify;
+}
+
+.markdown-content strong { font-weight: 600; color: var(--ink); }
+.markdown-content em { font-style: italic; }
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 0.5rem 0 1rem 1.5rem;
+}
+
+.markdown-content li {
+  font-size: 0.88rem; color: var(--ink-mid);
+  line-height: 1.65; margin-bottom: 0.3rem;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid var(--accent);
+  margin: 1.5rem 0; padding: 0.85rem 1.25rem;
+  background: #FFF5F5;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.markdown-content blockquote p {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 1rem; color: var(--accent); margin: 0;
+}
+
+.markdown-content table {
+  width: 100%; border-collapse: collapse;
+  margin: 1.25rem 0; font-size: 0.82rem;
+  box-shadow: var(--shadow-sm); border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.markdown-content thead th {
+  background: var(--ink); color: white;
+  padding: 0.65rem 0.9rem; text-align: left;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.markdown-content tbody td {
+  padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.markdown-content tbody tr:nth-child(even) { background: var(--surface-alt); }
+.markdown-content tbody tr:last-child td { border-bottom: none; }
+
+.markdown-content code {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82em; background: var(--surface-alt);
+  padding: 0.15em 0.4em; border-radius: 3px; color: var(--step3);
+}
+
+.markdown-content pre {
+  background: var(--nav-bg); border-radius: var(--radius-lg);
+  padding: 1.25rem; overflow-x: auto; margin: 1.25rem 0;
+}
+
+.markdown-content pre code {
+  background: transparent; color: #A5D6A7; font-size: 0.82rem; padding: 0;
+}
+
+.markdown-content hr {
+  border: none; border-top: 1px solid var(--rule); margin: 2rem 0;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--nav-bg); color: rgba(255,255,255,0.4);
+  padding: 2rem 4rem; font-size: 0.75rem; line-height: 1.65; text-align: center;
+}
+.site-footer p { margin-bottom: 0.25rem; }
+.site-footer a { color: var(--nav-accent); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .site-nav { display: none; }
+  .site-main { margin-left: 0; }
+  .markdown-content { padding: 2rem 1.25rem; }
+}
+
+@media print {
+  .site-nav { display: none; }
+  .site-main { margin-left: 0; }
+}

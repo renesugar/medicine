@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How I Diagnose and Treat — Microvascular Dysfunction</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ── Variables ─────────────────────────────────────────────────────────── */
+:root {
+  --step1: #2E7D32;  --step1-light: #E8F5E9;  --step1-mid: #A5D6A7;
+  --step2: #E65100;  --step2-light: #FFF3E0;  --step2-mid: #FFCC80;
+  --step3: #1565C0;  --step3-light: #E3F2FD;  --step3-mid: #90CAF9;
+  --step4: #B71C1C;  --step4-light: #FFEBEE;  --step4-mid: #EF9A9A;
+  --ssri:  #00695C;  --ssri-light:  #E0F2F1;
+  --covid: #4527A0;  --covid-light: #EDE7F6;
+  --ink:   #1A1A2E;  --ink-mid: #37474F;  --ink-light: #607D8B;
+  --rule:  #CFD8DC;  --surface: #FAFAFA;  --surface-alt: #F0F4F8;
+  --white: #FFFFFF;
+  --warn-bg: #FFF8E1;  --warn-border: #F9A825;
+  --danger-bg: #FFEBEE;  --danger-border: #C62828;
+  --nav-bg: #0D1B2A;  --nav-accent: #4FC3F7;
+  --accent-rule: #B71C1C;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.10);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --radius: 6px;  --radius-lg: 10px;
+  --col-gap: 2rem;
+  --article-max: 780px;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+  background: var(--surface);
+  color: var(--ink);
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ───────────────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0;
+  width: 240px; height: 100vh;
+  background: var(--nav-bg);
+  overflow-y: auto; z-index: 100;
+  padding-bottom: 2rem;
+  display: flex; flex-direction: column;
+}
+
+.nav-brand {
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 0.5rem;
+}
+
+.nav-brand-title {
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--nav-accent); line-height: 1.4;
+}
+
+.nav-brand-sub {
+  font-size: 0.62rem; color: rgba(255,255,255,0.35); margin-top: 0.25rem;
+}
+
+.nav-section-label {
+  padding: 1rem 1.25rem 0.3rem;
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.22);
+}
+
+nav a {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  padding: 0.5rem 1.25rem;
+  text-decoration: none; color: rgba(255,255,255,0.55);
+  font-size: 0.73rem; font-weight: 400; line-height: 1.35;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+
+nav a:hover {
+  color: var(--white); background: rgba(255,255,255,0.05);
+  border-left-color: var(--nav-accent);
+}
+
+.nav-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; color: rgba(255,255,255,0.25);
+  flex-shrink: 0; margin-top: 0.08rem;
+}
+
+/* ── Main ──────────────────────────────────────────────────────────────── */
+main { margin-left: 240px; flex: 1; max-width: 100%; }
+
+/* ── Journal Header ────────────────────────────────────────────────────── */
+.journal-header {
+  background: linear-gradient(135deg, #0D1B2A 0%, #1A3A5C 55%, #0D2B3F 100%);
+  padding: 3.5rem 4rem 3rem;
+  position: relative; overflow: hidden;
+}
+
+.journal-header::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 340px; height: 340px;
+  border: 70px solid rgba(79,195,247,0.06); border-radius: 50%;
+}
+
+.journal-header::after {
+  content: ''; position: absolute; bottom: -30px; left: 35%;
+  width: 180px; height: 180px;
+  border: 36px solid rgba(79,195,247,0.04); border-radius: 50%;
+}
+
+.article-series {
+  font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--nav-accent); margin-bottom: 0.85rem;
+  position: relative; z-index: 1;
+}
+
+.article-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 2.4rem; line-height: 1.12; color: white;
+  margin-bottom: 0.6rem; max-width: 700px;
+  position: relative; z-index: 1;
+}
+
+.article-subtitle {
+  font-size: 1rem; font-style: italic;
+  color: rgba(255,255,255,0.6); max-width: 600px;
+  margin-bottom: 2rem; line-height: 1.5;
+  font-family: 'DM Serif Display', serif;
+  position: relative; z-index: 1;
+}
+
+.article-meta {
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  position: relative; z-index: 1;
+}
+
+.meta-chip {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-size: 0.72rem; color: rgba(255,255,255,0.5);
+}
+
+.meta-chip strong { color: rgba(255,255,255,0.85); }
+
+.article-notice {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-left: 3px solid rgba(249,168,37,0.6);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem; line-height: 1.55;
+  color: rgba(255,255,255,0.65);
+  max-width: 680px;
+  position: relative; z-index: 1;
+}
+
+/* ── Article Body Layout ───────────────────────────────────────────────── */
+.article-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+/* ── Abstract Block ────────────────────────────────────────────────────── */
+.abstract-block {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent-rule);
+  border-radius: var(--radius-lg);
+  margin: 2.5rem 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.abstract-header {
+  background: #F5F5F5;
+  padding: 0.65rem 1.25rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.abstract-label {
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent-rule);
+}
+
+.abstract-text {
+  padding: 1.25rem 1.5rem;
+  font-size: 0.88rem; line-height: 1.7;
+  color: var(--ink-mid);
+  font-style: italic;
+}
+
+/* ── TOC ───────────────────────────────────────────────────────────────── */
+.toc-block {
+  background: var(--surface-alt);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+}
+
+.toc-title {
+  font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--ink-light); margin-bottom: 0.75rem;
+}
+
+.toc-list {
+  list-style: none; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.2rem 1.5rem;
+}
+
+.toc-list li a {
+  font-size: 0.8rem; color: var(--step3);
+  text-decoration: none; display: flex; gap: 0.5rem; align-items: baseline;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  transition: color 0.15s;
+}
+
+.toc-list li a:hover { color: var(--ink); }
+.toc-list li a .toc-num { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--ink-light); }
+
+/* ── Section Headers ───────────────────────────────────────────────────── */
+.section-block {
+  margin: 2.5rem 0;
+  padding-top: 0.5rem;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-light); margin-bottom: 0.3rem;
+}
+
+h2.section-heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.75rem; line-height: 1.15;
+  color: var(--ink); margin-bottom: 0.2rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--accent-rule);
+}
+
+h3.sub-heading {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.18rem; line-height: 1.25;
+  color: var(--ink); margin: 1.75rem 0 0.6rem;
+  font-style: italic;
+}
+
+h4.sub-sub-heading {
+  font-size: 0.9rem; font-weight: 700;
+  color: var(--ink-mid); margin: 1.25rem 0 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid var(--rule);
+}
+
+/* ── Body Text ─────────────────────────────────────────────────────────── */
+.body-text {
+  font-size: 0.92rem; line-height: 1.75;
+  color: var(--ink-mid);
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.body-text em { font-style: italic; color: var(--ink); }
+.body-text strong { font-weight: 600; color: var(--ink); }
+
+/* Citation superscripts */
+.cite {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68em; vertical-align: super;
+  color: var(--step3); font-weight: 500;
+  line-height: 0;
+  margin-left: 0.05em;
+}
+
+/* ── Drop Cap ──────────────────────────────────────────────────────────── */
+.drop-cap::first-letter {
+  font-family: 'DM Serif Display', serif;
+  float: left; font-size: 3.4rem; line-height: 0.85;
+  margin: 0.05rem 0.12rem 0 0;
+  color: var(--accent-rule); font-weight: normal;
+}
+
+/* ── Pull Quote ────────────────────────────────────────────────────────── */
+.pull-quote {
+  border-left: 4px solid var(--accent-rule);
+  margin: 1.75rem 0;
+  padding: 0.85rem 1.25rem;
+  background: #FFF5F5;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.pull-quote p {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic; font-size: 1.05rem; line-height: 1.55;
+  color: var(--accent-rule); margin: 0;
+}
+
+/* ── Callout Boxes ─────────────────────────────────────────────────────── */
+.callout {
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  font-size: 0.83rem; line-height: 1.55;
+  margin: 1.25rem 0;
+  border-left: 4px solid;
+}
+
+.callout strong { display: block; margin-bottom: 0.25rem; font-size: 0.85rem; }
+
+.callout-warn   { background: var(--warn-bg);   border-color: var(--warn-border);   color: #4A3300; }
+.callout-danger { background: var(--danger-bg); border-color: var(--danger-border); color: #5C0000; }
+.callout-info   { background: var(--step3-light); border-color: var(--step3);       color: #0A2A5C; }
+.callout-tip    { background: var(--step1-light); border-color: var(--step1);       color: #0A2E0F; }
+
+/* ── Tables ────────────────────────────────────────────────────────────── */
+.table-wrap {
+  overflow-x: auto; margin: 1.25rem 0 1.75rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--rule);
+}
+
+.table-caption {
+  font-size: 0.78rem; font-style: italic; color: var(--ink-light);
+  text-align: center; padding: 0.4rem 0.75rem 0.75rem;
+  background: white; border-top: 1px solid var(--rule);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+}
+
+table {
+  width: 100%; border-collapse: collapse;
+  font-size: 0.82rem; background: white;
+}
+
+thead th {
+  padding: 0.65rem 0.9rem;
+  text-align: left; font-size: 0.72rem;
+  font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; white-space: nowrap;
+  border-bottom: 2px solid var(--rule);
+}
+
+tbody td {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top; line-height: 1.45;
+}
+
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover { background: rgba(0,0,0,0.015); }
+
+.th-dark   { background: var(--ink);   color: white; }
+.th-ssri   { background: var(--ssri);  color: white; }
+.th-covid  { background: var(--covid); color: white; }
+.th-step1  { background: var(--step1); color: white; }
+
+.td-ssri  { background: var(--ssri-light);  color: var(--ssri);  font-size: 0.8rem; }
+.td-covid { background: var(--covid-light); color: var(--covid); font-size: 0.8rem; }
+
+/* ── Step Pills ────────────────────────────────────────────────────────── */
+.step-pill {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  padding: 0.15rem 0.55rem; border-radius: 100px;
+  font-size: 0.72rem; font-weight: 700; white-space: nowrap;
+}
+
+.step-pill-1 { background: var(--step1-light); color: var(--step1); }
+.step-pill-2 { background: var(--step2-light); color: var(--step2); }
+.step-pill-3 { background: var(--step3-light); color: var(--step3); }
+.step-pill-4 { background: var(--step4-light); color: var(--step4); }
+
+/* ── Treatment Cards ───────────────────────────────────────────────────── */
+.treatment-card {
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--rule);
+  margin: 1.25rem 0;
+}
+
+.treatment-card-header {
+  padding: 0.9rem 1.2rem;
+  display: flex; align-items: flex-start; gap: 0.85rem;
+}
+
+.treatment-card-header-icon {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(0,0,0,0.18);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem; font-weight: 700; color: white; flex-shrink: 0;
+}
+
+.treatment-card-header-title { color: white; font-weight: 700; font-size: 0.92rem; line-height: 1.2; }
+.treatment-card-header-sub   { color: rgba(255,255,255,0.75); font-size: 0.75rem; margin-top: 0.1rem; }
+
+.treatment-card-body {
+  background: white; padding: 1.1rem 1.25rem;
+}
+
+.treatment-card-body .body-text { margin-bottom: 0.75rem; }
+
+.tc-step1 .treatment-card-header { background: var(--step1); }
+.tc-step2 .treatment-card-header { background: var(--step2); }
+.tc-step3 .treatment-card-header { background: var(--step3); }
+.tc-step4 .treatment-card-header { background: var(--step4); }
+.tc-ssri  .treatment-card-header { background: var(--ssri); }
+.tc-covid .treatment-card-header { background: var(--covid); }
+
+/* ── Bullet Lists ──────────────────────────────────────────────────────── */
+.styled-list {
+  list-style: none; padding: 0; margin: 0.5rem 0 1rem;
+}
+
+.styled-list li {
+  font-size: 0.88rem; color: var(--ink-mid); line-height: 1.6;
+  padding: 0.35rem 0 0.35rem 1.25rem;
+  position: relative;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.styled-list li:last-child { border-bottom: none; }
+
+.styled-list li::before {
+  content: '–';
+  position: absolute; left: 0;
+  color: var(--ink-light); font-weight: 400;
+}
+
+.styled-list li em { font-style: normal; font-weight: 600; color: var(--ink); }
+
+.styled-list li strong { font-weight: 600; color: var(--ink); }
+
+/* ── Numbered list ─────────────────────────────────────────────────────── */
+.numbered-list {
+  list-style: none; padding: 0; margin: 0.5rem 0 1rem; counter-reset: nlist;
+}
+
+.numbered-list li {
+  font-size: 0.88rem; color: var(--ink-mid); line-height: 1.6;
+  padding: 0.35rem 0 0.35rem 2rem;
+  position: relative; counter-increment: nlist;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.numbered-list li:last-child { border-bottom: none; }
+
+.numbered-list li::before {
+  content: counter(nlist) '.';
+  position: absolute; left: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--step3); padding-top: 0.05rem;
+}
+
+/* ── Pathways flow ─────────────────────────────────────────────────────── */
+.pathway-flow {
+  display: flex; align-items: stretch; gap: 0;
+  margin: 1.5rem 0; border-radius: var(--radius-lg);
+  overflow: hidden; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--rule);
+}
+
+.pathway-step {
+  flex: 1; padding: 0.85rem 0.75rem; text-align: center;
+  color: white; font-size: 0.78rem; font-weight: 700; line-height: 1.35;
+  position: relative;
+}
+
+.pathway-step span {
+  display: block; font-size: 0.67rem; opacity: 0.82; font-weight: 400; margin-top: 0.2rem;
+}
+
+.pathway-arrow {
+  width: 0; height: 0;
+  border-top: 22px solid transparent; border-bottom: 22px solid transparent;
+  flex-shrink: 0; z-index: 1; align-self: stretch; display: flex; align-items: center;
+}
+
+/* ── Lab Panel ─────────────────────────────────────────────────────────── */
+.lab-panel {
+  border: 1px solid var(--rule); border-radius: var(--radius-lg);
+  overflow: hidden; margin: 1.25rem 0; box-shadow: var(--shadow-sm);
+}
+
+.lab-panel-header {
+  padding: 0.65rem 1rem; font-size: 0.72rem; font-weight: 700;
+  color: white; letter-spacing: 0.05em; text-transform: uppercase;
+}
+
+.lab-item {
+  display: grid; grid-template-columns: 1fr auto auto;
+  gap: 0.5rem; align-items: start;
+  padding: 0.65rem 1rem;
+  background: white; border-bottom: 1px solid var(--rule);
+  font-size: 0.82rem;
+}
+
+.lab-item:last-child { border-bottom: none; }
+
+.lab-item:nth-child(even) { background: var(--surface-alt); }
+
+.lab-name { font-weight: 500; color: var(--ink); line-height: 1.3; }
+.lab-desc { font-size: 0.78rem; color: var(--ink-light); margin-top: 0.1rem; }
+
+.lab-threshold {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem;
+  font-weight: 600; color: var(--step3); white-space: nowrap;
+  padding: 0.15rem 0.4rem; background: var(--step3-light);
+  border-radius: 4px; align-self: flex-start;
+}
+
+.lab-code {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+  color: var(--ink-light); white-space: nowrap; align-self: flex-start;
+}
+
+/* ── Monitoring Timeline ───────────────────────────────────────────────── */
+.monitoring-timeline {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0; margin: 1.25rem 0;
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--rule);
+}
+
+.monitor-phase { }
+
+.monitor-phase-head {
+  padding: 0.85rem 1rem; font-size: 0.78rem; font-weight: 700;
+  color: white; text-align: center; line-height: 1.35;
+}
+
+.monitor-phase-head span { display: block; font-size: 0.68rem; opacity: 0.82; font-weight: 400; }
+
+.monitor-phase-body {
+  background: white; padding: 0.75rem 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.monitor-item {
+  font-size: 0.8rem; color: var(--ink-mid);
+  padding: 0.22rem 0; display: flex; align-items: baseline; gap: 0.45rem;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+
+.monitor-item:last-child { border-bottom: none; }
+.monitor-arrow { font-weight: 700; flex-shrink: 0; }
+
+/* ── References ────────────────────────────────────────────────────────── */
+.references-section {
+  margin: 2.5rem 0 3rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--rule);
+}
+
+.references-title {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-light); margin-bottom: 1rem;
+}
+
+.reference-list {
+  list-style: none; padding: 0;
+  columns: 2; column-gap: 2.5rem;
+}
+
+.reference-item {
+  font-size: 0.77rem; line-height: 1.5; color: var(--ink-light);
+  padding: 0.3rem 0 0.3rem 1.5rem;
+  text-indent: -1.5rem;
+  break-inside: avoid; margin-bottom: 0.1rem;
+}
+
+.reference-item .ref-num {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+  color: var(--step3); font-weight: 600; margin-right: 0.35rem;
+}
+
+.reference-item em { font-style: italic; }
+
+/* ── Dividers ──────────────────────────────────────────────────────────── */
+.section-divider {
+  height: 1px; background: var(--rule); margin: 2rem 0;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+footer {
+  background: var(--nav-bg); color: rgba(255,255,255,0.4);
+  padding: 2rem 4rem; font-size: 0.75rem; line-height: 1.65; text-align: center;
+}
+
+footer p { margin-bottom: 0.25rem; }
+
+/* ── Print ─────────────────────────────────────────────────────────────── */
+@media print {
+  nav { display: none; }
+  main { margin-left: 0; }
+  .journal-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section-block { page-break-inside: avoid; }
+  .reference-list { columns: 2; }
+  .monitoring-timeline { grid-template-columns: 1fr 1fr 1fr; }
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  nav { display: none; }
+  main { margin-left: 0; }
+  .journal-header { padding: 2rem 1.5rem; }
+  .article-body { padding: 0 1.25rem; }
+  .article-title { font-size: 1.8rem; }
+  .toc-list { grid-template-columns: 1fr; }
+  .reference-list { columns: 1; }
+  .monitoring-timeline { grid-template-columns: 1fr; }
+  .lab-item { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR NAV ─────────────────────────────────────────────────────────── -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-brand-title">How I Diagnose &amp; Treat<br>Microvascular Dysfunction</div>
+    <div class="nav-brand-sub">Clinical Narrative Article</div>
+  </div>
+
+  <div class="nav-section-label">Site</div>
+  <a href="../index.html" class="nav-link"><span class="nav-num">↩</span><span>All Articles</span></a>
+  <div class="nav-section-label">Article Sections</div>
+  <a href="#abstract"><span class="nav-num">—</span>Abstract</a>
+  <a href="#introduction"><span class="nav-num">01</span>Introduction</a>
+  <a href="#pathophysiology"><span class="nav-num">02</span>Pathophysiology: 4-Step Model</a>
+  <a href="#step1"><span class="nav-num">↳</span>Step 1: Endothelium / NO</a>
+  <a href="#step2"><span class="nav-num">↳</span>Step 2: Platelet Amplification</a>
+  <a href="#step3"><span class="nav-num">↳</span>Step 3: Dense Fibrin</a>
+  <a href="#step4"><span class="nav-num">↳</span>Step 4: Fibrinolysis Shutdown</a>
+  <a href="#diagnosis"><span class="nav-num">03</span>Diagnosis</a>
+  <a href="#lab-eval"><span class="nav-num">↳</span>Laboratory Evaluation</a>
+  <a href="#treatment"><span class="nav-num">04</span>Treatment</a>
+  <a href="#tx-ssri"><span class="nav-num">↳</span>SSRI Withdrawal: Steps 1–2</a>
+  <a href="#tx-covid"><span class="nav-num">↳</span>Long COVID: Steps 1–4</a>
+  <a href="#safety"><span class="nav-num">05</span>Safety Considerations</a>
+  <a href="#monitoring"><span class="nav-num">06</span>Monitoring</a>
+  <a href="#conclusions"><span class="nav-num">07</span>Conclusions</a>
+  <a href="#references"><span class="nav-num">—</span>References</a>
+</nav>
+
+<!-- ── MAIN ────────────────────────────────────────────────────────────────── -->
+<main>
+
+<!-- JOURNAL HEADER -->
+<div class="journal-header">
+  <div class="article-series">How I Diagnose and Treat — Clinical Practice Series</div>
+  <h1 class="article-title">How I Diagnose and Treat Microvascular Dysfunction in SSRI Withdrawal and Post-Viral Illness</h1>
+  <p class="article-subtitle">A Mechanism-Based Approach to Endothelial Instability, Platelet Dysregulation, and Fibrinolytic Failure</p>
+  <div class="article-meta">
+    <div class="meta-chip"><strong>Series:</strong>&nbsp;How I Diagnose and Treat</div>
+    <div class="meta-chip"><strong>Focus:</strong>&nbsp;Microvascular Medicine</div>
+    <div class="meta-chip"><strong>Conditions:</strong>&nbsp;SSRI Withdrawal · Long COVID / PASC</div>
+  </div>
+  <div class="article-notice">
+    <em>This article reflects the author's personal clinical approach and emerging mechanistic reasoning. It does not constitute an evidence-based guideline. Controlled clinical trials are urgently needed. All treatment decisions must be made by a licensed clinician.</em>
+  </div>
+</div>
+
+<div class="article-body">
+
+<!-- ABSTRACT -->
+<div id="abstract" class="abstract-block">
+  <div class="abstract-header">
+    <span class="abstract-label">Abstract</span>
+  </div>
+  <div class="abstract-text">
+    Selective serotonin reuptake inhibitor (SSRI) withdrawal and post-viral illness—most prominently Long COVID/Post-Acute Sequelae of COVID-19 (PASC)—share a surprising convergence of microvascular symptoms: head pressure, visual and sensory distortion, cognitive slowing, and exercise intolerance. Though mechanistically distinct in origin, both conditions intersect at a common pathological axis: endothelial nitric oxide (NO) instability, platelet dysregulation, and impaired microcirculatory flow. In Long COVID, this axis can progress to structural fibrin amyloid microclot formation and fibrinolytic shutdown. In SSRI withdrawal, the disruption is typically functional and transient, driven by serotonin-platelet physiology and autonomic rebound. This article presents a mechanism-guided diagnostic and treatment framework organized around four sequential pathological steps: (1) endothelial/NO instability; (2) platelet amplification via platelet microparticles (PMPs) and von Willebrand factor (vWF); (3) dense fibrin microclot formation; and (4) fibrinolysis shutdown mediated by alpha-2 antiplasmin and plasminogen activator inhibitor-1 (PAI-1). Separate treatment algorithms are provided for each condition, with an emphasis on upstream stabilization before pharmacological escalation.
+  </div>
+</div>
+
+<!-- TOC -->
+<div class="toc-block">
+  <div class="toc-title">Contents</div>
+  <ol class="toc-list">
+    <li><a href="#introduction"><span class="toc-num">01</span>Introduction: Two Syndromes, One Bottleneck</a></li>
+    <li><a href="#pathophysiology"><span class="toc-num">02</span>Pathophysiology: A Four-Step Model</a></li>
+    <li><a href="#diagnosis"><span class="toc-num">03</span>Diagnosis</a></li>
+    <li><a href="#treatment"><span class="toc-num">04</span>Treatment</a></li>
+    <li><a href="#safety"><span class="toc-num">05</span>Special Considerations &amp; Safety</a></li>
+    <li><a href="#monitoring"><span class="toc-num">06</span>Monitoring Response to Treatment</a></li>
+    <li><a href="#conclusions"><span class="toc-num">07</span>Conclusions</a></li>
+    <li><a href="#references"><span class="toc-num">—</span>References (33)</a></li>
+  </ol>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 1 — INTRODUCTION
+══════════════════════════════════════════════════════════════════ -->
+<div id="introduction" class="section-block">
+  <div class="section-label">Section 01</div>
+  <h2 class="section-heading">Introduction: Two Syndromes, One Microvascular Bottleneck</h2>
+
+  <p class="body-text drop-cap">At first encounter, SSRI withdrawal and Long COVID appear to have little in common. One is a pharmacological discontinuation phenomenon; the other, a post-infectious syndrome of uncertain pathogenesis. Yet clinicians who evaluate both conditions repeatedly encounter patients reporting a strikingly similar cluster of complaints: diffuse head pressure, light and sound sensitivity, a quality of visual distortion sometimes described as "too vivid," episodes of cognitive fragmentation, and a peculiar fatigue that follows even modest exertion. Standard investigations—full blood count, routine coagulation panel, inflammatory markers, neuroimaging—are frequently unremarkable. Patients are often reassured, and yet their suffering persists.</p>
+
+  <p class="body-text">Understanding this overlap requires looking beneath conventional laboratory parameters toward the microvascular system: the capillary-level circulation of the brain, retina, and peripheral tissues, governed by the interplay of endothelial nitric oxide, platelet behavior, and fibrin dynamics.</p>
+
+  <h3 class="sub-heading">The Platelet-Serotonin Axis in SSRI Withdrawal</h3>
+
+  <p class="body-text">Serotonin is not a purely neurological molecule. Approximately 99% of the body's peripheral serotonin is stored in platelet dense granules, taken up from plasma via the serotonin transporter (SERT)—the same transporter that SSRIs inhibit in the central nervous system.<span class="cite">[1,2]</span> Chronic SSRI use reduces platelet serotonin content by more than 80%,<span class="cite">[3]</span> fundamentally altering the platelet's role in hemostasis. Platelets depleted of serotonin show reduced aggregation responses to collagen and epinephrine and diminished capacity to form the amplification signals that ordinarily stabilize vascular injury responses.<span class="cite">[4,5]</span> Upon SSRI discontinuation, this pharmacologically suppressed system undergoes a rebound that is neither clean nor uniform. Platelet serotonin content does not simply normalize; instead, there is a period of erratic platelet reactivity, altered receptor sensitivity, and autonomic dysregulation that can destabilize the microvascular environment for days to weeks.<span class="cite">[6]</span></p>
+
+  <p class="body-text">This is compounded by the multi-system nature of SSRI discontinuation. The syndrome—affecting 15–50% of patients who discontinue abruptly—encompasses not only neurological symptoms (the well-known "brain zaps," sensory disturbances, dizziness) but also autonomic instability, including orthostatic tachycardia, sweating, and fluctuating vascular tone.<span class="cite">[7,8]</span> These autonomic features translate directly to endothelial stress: sympathetic vasoconstriction suppresses endothelial nitric oxide synthase (eNOS) activity, reduces NO bioavailability, and creates conditions in which von Willebrand factor (vWF) secretion from endothelial cells is disinhibited.<span class="cite">[9]</span></p>
+
+  <h3 class="sub-heading">The Endothelial-Fibrin Axis in Long COVID</h3>
+
+  <p class="body-text">The pathophysiology of Long COVID is structurally more severe. Emerging work from Pretorius, Kell, and colleagues has established that a significant proportion of Long COVID patients harbor fibrin(ogen) amyloid microclots in their platelet-poor plasma—protease-resistant clotting structures that stain positive with amyloid fluorescent dyes such as thioflavin T, distinct from normal fibrin clots.<span class="cite">[10,11]</span> These microclots entrap pro-inflammatory molecules including von Willebrand factor (vWF), platelet factor 4 (PF4), and alpha-2 antiplasmin, creating a self-sustaining environment of capillary obstruction and fibrinolytic failure.<span class="cite">[12]</span> The SARS-CoV-2 spike protein itself has been shown to induce fibrin polymerization into this resistant amyloid-like conformation even in the absence of thrombin, suggesting a direct structural mechanism.<span class="cite">[13]</span></p>
+
+  <p class="body-text">COVID-19 is now understood primarily as an endothelial disease.<span class="cite">[14]</span> Widespread endotheliopathy drives massive vWF secretion, platelet hyperactivation, and an imbalance between the metalloprotease ADAMTS13—which cleaves ultra-large vWF multimers into functional sizes—and the overwhelming vWF load that exceeds its regulatory capacity.<span class="cite">[15]</span> The result is a pro-thrombotic, anti-fibrinolytic state in which capillary microclots form and persist, impairing oxygen delivery to tissues and producing the characteristic symptom triad of fatigue, cognitive dysfunction, and post-exertional malaise (PEM).</p>
+
+  <h3 class="sub-heading">The Common Bottleneck</h3>
+
+  <p class="body-text">Despite their different origins, SSRI withdrawal and Long COVID converge at the same control nodes of the microvascular system (Table 1). Both conditions involve transient or sustained reductions in endothelial NO bioavailability; both perturb platelet behavior through different but overlapping mechanisms (serotonin depletion versus hyperactivation); and both create conditions in which normal fibrin formation and clearance are compromised. The key distinction is severity and persistence: SSRI withdrawal typically causes a functional, self-limited microvascular instability lasting days to weeks, while Long COVID can establish structural, self-perpetuating microclot pathology lasting months to years.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-dark" style="width:26%">Feature</th>
+          <th class="th-ssri" style="text-align:center;width:37%">SSRI Withdrawal</th>
+          <th class="th-covid" style="text-align:center;width:37%">Long COVID / PASC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Primary trigger</td><td class="td-ssri">Platelet serotonin depletion + autonomic rebound</td><td class="td-covid">Spike protein endotheliopathy + viral persistence</td></tr>
+        <tr><td>Fibrin structure</td><td class="td-ssri">Likely normal; functional dysregulation</td><td class="td-covid">Amyloid-like; protease-resistant</td></tr>
+        <tr><td>Platelet state</td><td class="td-ssri">Dysregulated/unstable (rebound)</td><td class="td-covid">Hyperactivated (structural)</td></tr>
+        <tr><td>NO bioavailability</td><td class="td-ssri">Transiently reduced</td><td class="td-covid">Persistently reduced</td></tr>
+        <tr><td>vWF level</td><td class="td-ssri">Mildly/transiently elevated</td><td class="td-covid">Markedly elevated</td></tr>
+        <tr><td>ADAMTS13 deficit</td><td class="td-ssri">Relative/functional</td><td class="td-covid">Marked; may have autoantibody component</td></tr>
+        <tr><td>α2-antiplasmin</td><td class="td-ssri">Mildly elevated (transient)</td><td class="td-covid">Elevated; embedded in microclots</td></tr>
+        <tr><td>PAI-1 activity</td><td class="td-ssri">Mildly/transiently elevated</td><td class="td-covid">Elevated; persistent fibrinolytic block</td></tr>
+        <tr><td>Expected duration</td><td class="td-ssri">Days to weeks</td><td class="td-covid">Months to years</td></tr>
+        <tr><td>Steps typically required</td><td class="td-ssri" style="font-weight:700">1–2</td><td class="td-covid" style="font-weight:700">1–4</td></tr>
+      </tbody>
+    </table>
+    <div class="table-caption">Table 1. Comparison of microvascular pathology in SSRI withdrawal and Long COVID/PASC.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 2 — PATHOPHYSIOLOGY
+══════════════════════════════════════════════════════════════════ -->
+<div id="pathophysiology" class="section-block">
+  <div class="section-label">Section 02</div>
+  <h2 class="section-heading">Pathophysiology: A Four-Step Model</h2>
+
+  <p class="body-text">To guide clinical reasoning and intervention sequencing, I organize the pathophysiology into four mechanistically distinct but sequential steps. Upstream steps must be addressed before downstream interventions are added; jumping directly to anticoagulation without stabilizing the endothelial environment produces incomplete and unstable responses.</p>
+
+  <div class="pathway-flow">
+    <div class="pathway-step" style="background:var(--step1)">Step 1<span>Endothelium / NO</span></div>
+    <div class="pathway-arrow" style="border-left: 14px solid var(--step1); border-top-width: 22px; border-bottom-width: 22px;"></div>
+    <div class="pathway-step" style="background:var(--step2)">Step 2<span>Platelets / PMPs</span></div>
+    <div class="pathway-arrow" style="border-left: 14px solid var(--step2); border-top-width: 22px; border-bottom-width: 22px;"></div>
+    <div class="pathway-step" style="background:var(--step3)">Step 3<span>Fibrin Structure</span></div>
+    <div class="pathway-arrow" style="border-left: 14px solid var(--step3); border-top-width: 22px; border-bottom-width: 22px;"></div>
+    <div class="pathway-step" style="background:var(--step4)">Step 4<span>Fibrinolysis</span></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div id="step1" class="treatment-card tc-step1">
+    <div class="treatment-card-header">
+      <div class="treatment-card-header-icon">1</div>
+      <div>
+        <div class="treatment-card-header-title">Step 1: Endothelial Activation and NO Instability</div>
+        <div class="treatment-card-header-sub">Trigger: eNOS suppression → ↑ vWF → platelet micro-aggregation</div>
+      </div>
+    </div>
+    <div class="treatment-card-body">
+      <p class="body-text">The endothelium is the primary regulator of microvascular homeostasis. Under physiological conditions, eNOS-derived NO suppresses vWF secretion from Weibel–Palade bodies, inhibits platelet activation, and maintains vasodilatory tone. When NO bioavailability falls—through oxidative stress, autonomic vasoconstriction, or direct endothelial injury—this regulatory brake is released.</p>
+      <p class="body-text">In SSRI withdrawal, the trigger is primarily autonomic: sympathetic rebound after serotonin system recalibration drives vasoconstriction and suppresses eNOS activity.<span class="cite">[8]</span> In Long COVID, the trigger is structural: direct endothelial infection and inflammatory cytokine signaling cause endothelialitis and sustained eNOS suppression.<span class="cite">[14]</span> In both cases, the downstream consequence is vWF release—ultra-large vWF multimers (UL-vWF) form "sticky strings" on endothelial surfaces that capture circulating platelets.<span class="cite">[15]</span></p>
+      <p class="body-text">Vitamin K2 (MK-4 and MK-7 forms) deserves mention at this step. Beyond its classical role in coagulation factor carboxylation, vitamin K2 activates extrahepatic proteins including Matrix Gla Protein (MGP) and Gas6 (growth arrest-specific 6). Gas6 protects endothelial cells from apoptosis and modulates platelet activation thresholds via the Axl receptor tyrosine kinase pathway.<span class="cite">[16,17]</span> Preclinical evidence shows that MK-7 improves eNOS-dependent endothelial function and increases NO bioavailability in murine models of vascular dysfunction.<span class="cite">[18,19]</span></p>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div id="step2" class="treatment-card tc-step2">
+    <div class="treatment-card-header">
+      <div class="treatment-card-header-icon">2</div>
+      <div>
+        <div class="treatment-card-header-title">Step 2: Platelet Amplification and PMP Release</div>
+        <div class="treatment-card-header-sub">Trigger: dysregulated platelets → PMP shedding → dense micro-aggregation scaffolds</div>
+      </div>
+    </div>
+    <div class="treatment-card-body">
+      <p class="body-text">When platelet activation is dysregulated—whether through serotonin rebound, hyperactivation by vWF, or direct inflammatory stimulation—platelets shed platelet microparticles (PMPs). These sub-micron vesicles are loaded with phosphatidylserine, coagulation factors, and inflammatory mediators, making them far more pro-coagulant per surface area than intact platelets.<span class="cite">[20]</span></p>
+      <p class="body-text">PMPs bind to ultra-large vWF multimers, creating dense micro-aggregation scaffolds that amplify local thrombin generation. The resulting fibrin formed in this context is structurally altered: thrombin generated on phosphatidylserine-rich PMP surfaces drives fibrin polymerization into tighter, denser networks that resist normal fibrinolysis.<span class="cite">[21]</span> In Long COVID, the additional presence of spike protein further drives fibrin misfolding toward amyloid-like conformations.<span class="cite">[13]</span></p>
+      <p class="body-text">ADAMTS13 activity can be functionally impaired by high vWF load, oxidative stress, and inflammatory cytokines—all present in both conditions.<span class="cite">[15]</span> Herpesvirus reactivation (EBV, CMV), documented in Long COVID and occurring under immunological stress of SSRI withdrawal, further suppresses ADAMTS13 through inflammatory cytokine-mediated mechanisms.<span class="cite">[22]</span> Mean platelet volume (MPV)—a proxy for platelet reactivity—serves as an accessible early clinical marker of this amplification phase.</p>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div id="step3" class="treatment-card tc-step3">
+    <div class="treatment-card-header">
+      <div class="treatment-card-header-icon">3</div>
+      <div>
+        <div class="treatment-card-header-title">Step 3: Dense Fibrin Formation and Microclot Persistence</div>
+        <div class="treatment-card-header-sub">Trigger: PMP-driven thrombin generation → amyloid-like fibrin architecture</div>
+      </div>
+    </div>
+    <div class="treatment-card-body">
+      <p class="body-text">In Long COVID, proteomic analysis of fibrin amyloid microclots has confirmed the presence of elevated vWF, PF4, and alpha-2 antiplasmin within the clot matrix itself.<span class="cite">[12]</span> Alpha-2 antiplasmin is cross-linked into fibrin by activated Factor XIIIa, creating clots that are intrinsically resistant to plasmin-mediated degradation—the "lock-in" mechanism that converts transient microaggregates into persistent obstructions.<span class="cite">[23]</span></p>
+      <p class="body-text">Clinically, this step manifests as the onset of post-exertional malaise: a worsening of symptoms hours to days after even moderate physical or cognitive exertion. This temporal pattern reflects the patchy oxygen delivery that results from partially obstructed capillaries, where even small increases in metabolic demand cannot be met.</p>
+      <p class="body-text">Fibrinogen elevation is the laboratory correlate of this step, though fibrinogen levels can remain within the "normal" range while still reflecting a shift toward denser clot architecture. D-dimer can paradoxically be normal at this stage if fibrinolysis is already impaired—the clots form but are not being broken down, leaving no degradation products to detect.</p>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div id="step4" class="treatment-card tc-step4">
+    <div class="treatment-card-header">
+      <div class="treatment-card-header-icon">4</div>
+      <div>
+        <div class="treatment-card-header-title">Step 4: Fibrinolysis Shutdown (α2-Antiplasmin and PAI-1)</div>
+        <div class="treatment-card-header-sub">Trigger: plasmin inhibition → microclots become permanent → self-sustaining loop</div>
+      </div>
+    </div>
+    <div class="treatment-card-body">
+      <p class="body-text">The final step—and the one most responsible for symptomatic persistence—is fibrinolysis shutdown. Plasmin, the primary fibrinolytic enzyme, is generated from plasminogen via tissue plasminogen activator (tPA). Two inhibitors prevent this: alpha-2 antiplasmin (α2-AP) directly inactivates plasmin, while PAI-1 blocks tPA activity upstream.<span class="cite">[23,24]</span></p>
+      <p class="body-text">In Long COVID, both inhibitors are elevated. Proteomics of microclot fractions confirms alpha-2 antiplasmin trapping within the clot structure, creating focal fibrinolytic failure.<span class="cite">[12]</span> PAI-1 elevation—driven by metabolic dysfunction, chronic inflammation, and cortisol dysregulation—adds a systemic component to this failure.<span class="cite">[24]</span></p>
+      <p class="body-text">In SSRI withdrawal, Step 4 involvement is less common and typically transient, but may occur in patients with pre-existing metabolic risk factors or prolonged, difficult withdrawals. The clinical signal is a plateau in recovery despite apparent improvement in upstream markers.</p>
+      <div class="pull-quote">
+        <p>The pathological loop is self-sustaining: microclots obstruct capillaries → ischemia-reperfusion injury → oxidative stress → eNOS suppression → more vWF → more platelet activation. Breaking this loop requires simultaneous action at multiple levels.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 3 — DIAGNOSIS
+══════════════════════════════════════════════════════════════════ -->
+<div id="diagnosis" class="section-block">
+  <div class="section-label">Section 03</div>
+  <h2 class="section-heading">Diagnosis</h2>
+
+  <h3 class="sub-heading">Clinical Recognition</h3>
+
+  <p class="body-text">The diagnostic challenge in both SSRI withdrawal and Long COVID is that the microvascular component is invisible to standard investigations. A patient presenting with diffuse head pressure, visual sensitivity, cognitive slowing, and dizziness—with normal CBC, coagulation screen, and basic metabolic panel—is typically either reassured or referred for psychiatric evaluation. This represents a missed diagnostic opportunity.</p>
+
+  <p class="body-text">The clinical pattern that suggests microvascular involvement comprises three elements: (1) symptoms that are <em>neurologically flavored but anatomically diffuse</em>, rather than focal; (2) <em>sensory amplification</em> (light, sound, visual contrast sensitivity) disproportionate to apparent pathology; and (3) a <em>post-exertional component</em> in which symptoms worsen hours after activity and take days to recover—a pattern inconsistent with purely central mechanisms.</p>
+
+  <div class="callout callout-tip">
+    <strong>In SSRI Withdrawal:</strong>
+    Temporal relationship is key. Symptoms emerging within days of dose reduction or cessation fitting the FINISH mnemonic (Flu-like symptoms, Insomnia, Nausea, Imbalance, Sensory disturbances, Hyperarousal) strongly suggest the syndrome.<span class="cite">[7]</span> The subset with prominent vascular-type symptoms—head pressure, orthostatic intolerance, visual distortion—may benefit from specific microvascular evaluation.
+  </div>
+
+  <div class="callout callout-info">
+    <strong>In Long COVID:</strong>
+    Diagnosis is established by a history of acute COVID-19 infection followed by symptoms persisting beyond 12 weeks that cannot be explained by an alternative diagnosis.<span class="cite">[25]</span> Fatigue, cognitive dysfunction, and post-exertional malaise as the dominant triad—particularly in previously healthy individuals—is characteristic. Dysautonomia (POTS) co-exists frequently and should be evaluated with a 10-minute standing test or formal tilt-table assessment.<span class="cite">[26]</span>
+  </div>
+
+  <h3 id="lab-eval" class="sub-heading">Laboratory Evaluation</h3>
+
+  <p class="body-text">Standard coagulation panels (PT, INR, aPTT) are almost always normal in both conditions and should not be used to exclude microvascular pathology. The relevant tests evaluate endothelial activation, vWF-ADAMTS13 balance, platelet reactivity, fibrin architecture, and fibrinolysis capacity.</p>
+
+  <div class="callout callout-warn">
+    <strong>⚠️ Key Interpretive Principle:</strong>
+    Look for a <em>pattern</em>, not a single abnormal value. vWF elevated + ADAMTS13 relatively low + fibrinogen elevated + normal or mildly elevated D-dimer + elevated MPV constitutes a high-specificity profile for the microclot phenotype, even when individual values remain within published reference ranges.
+  </div>
+
+  <h4 class="sub-sub-heading">Core Panel (Accessible Through Most Reference Laboratories)</h4>
+
+  <div class="lab-panel">
+    <div class="lab-panel-header" style="background:var(--ink)">Core Laboratory Panel</div>
+    <div class="lab-item">
+      <div><div class="lab-name">vWF Antigen + Activity (Ristocetin)</div><div class="lab-desc">Reflects endothelial activation. Ratio of activity to antigen assesses functional vWF multimer composition.</div></div>
+      <div class="lab-threshold">&gt;150%</div>
+      <div class="lab-code">Labcorp 086280 / 086264</div>
+    </div>
+    <div class="lab-item">
+      <div><div class="lab-name">ADAMTS13 Activity</div><div class="lab-desc">Critical regulatory counterpart to vWF. Paired with elevated vWF, establishes the micro-aggregation imbalance.</div></div>
+      <div class="lab-threshold">&lt;60%</div>
+      <div class="lab-code">Labcorp 117913</div>
+    </div>
+    <div class="lab-item">
+      <div><div class="lab-name">D-Dimer</div><div class="lab-desc">Active clot turnover marker. Crucially, a <em>normal D-dimer does not exclude microclotting</em> — when fibrinolysis is impaired, clots form without degradation products.</div></div>
+      <div class="lab-threshold">&gt;0.5 mg/L FEU</div>
+      <div class="lab-code">Labcorp 115188</div>
+    </div>
+    <div class="lab-item">
+      <div><div class="lab-name">Fibrinogen (Clauss method)</div><div class="lab-desc">Levels &gt;4.0 g/L suggest a shift toward dense clot formation; also a pro-inflammatory acute-phase reactant.</div></div>
+      <div class="lab-threshold">&gt;4.0 g/L</div>
+      <div class="lab-code">Labcorp 001610</div>
+    </div>
+    <div class="lab-item">
+      <div><div class="lab-name">CBC with Mean Platelet Volume (MPV)</div><div class="lab-desc">MPV &gt;11 fL with normal platelet count indicates reactive platelets — sensitive early marker of platelet amplification (Step 2).</div></div>
+      <div class="lab-threshold">MPV &gt;11 fL</div>
+      <div class="lab-code">Labcorp 005009</div>
+    </div>
+    <div class="lab-item">
+      <div><div class="lab-name">High-Sensitivity CRP (hs-CRP)</div><div class="lab-desc">Identifies ongoing inflammatory endothelial activation driving Step 1 and 2 pathology.</div></div>
+      <div class="lab-threshold">&gt;3 mg/L</div>
+      <div class="lab-code">Labcorp 120766</div>
+    </div>
+  </div>
+
+  <h4 class="sub-sub-heading">Extended Panel (For Cases Not Responding or With Suspected Step 4 Involvement)</h4>
+
+  <div class="lab-panel">
+    <div class="lab-panel-header" style="background:var(--step4)">Extended Panel — Step 4 Markers</div>
+    <div class="lab-item">
+      <div><div class="lab-name">Alpha-2 Antiplasmin Activity</div><div class="lab-desc">&gt;120% activity indicates fibrinolysis inhibition. Confirms the "lock-in" mechanism of persistent microclots.</div></div>
+      <div class="lab-threshold">&gt;120%</div>
+      <div class="lab-code">Labcorp 500540</div>
+    </div>
+    <div class="lab-item">
+      <div><div class="lab-name">PAI-1 (Plasminogen Activator Inhibitor-1)</div><div class="lab-desc">Blocks tPA activity upstream of plasmin. Correlates with metabolic syndrome, cortisol dysregulation, and chronic inflammation.</div></div>
+      <div class="lab-threshold">&gt;50 ng/mL</div>
+      <div class="lab-code">Labcorp 500512</div>
+    </div>
+    <div class="lab-item">
+      <div><div class="lab-name">Plasminogen Activity</div><div class="lab-desc">Reduced capacity suggests systemic fibrinolytic impairment contributing to Step 4 failure.</div></div>
+      <div class="lab-threshold">&lt;70%</div>
+      <div class="lab-code">Labcorp 500538</div>
+    </div>
+  </div>
+
+  <h4 class="sub-sub-heading">Contextual Testing (When Clinically Indicated)</h4>
+
+  <ul class="styled-list">
+    <li><em>EBV and CMV serology:</em> Active herpesvirus reactivation is documented in Long COVID and can suppress ADAMTS13 activity, perpetuating the vWF-platelet amplification loop.<span class="cite">[22]</span> Consider in patients with difficult SSRI withdrawal, particularly those with fatigue and immune symptoms.</li>
+    <li><em>Ferritin and LDH:</em> Markers of systemic inflammation and endothelial/tissue injury, particularly relevant in Long COVID.</li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 4 — TREATMENT
+══════════════════════════════════════════════════════════════════ -->
+<div id="treatment" class="section-block">
+  <div class="section-label">Section 04</div>
+  <h2 class="section-heading">Treatment</h2>
+
+  <h3 class="sub-heading">General Principles</h3>
+
+  <p class="body-text">The four-step model imposes a crucial sequencing constraint: <strong>treat upstream before escalating downstream.</strong> Adding anticoagulation before stabilizing endothelial function and platelet behavior is analogous to patching a dam while the upstream reservoir continues to overflow. Clinical experience in Long COVID suggests that patients who receive anticoagulation without prior upstream stabilization often show incomplete responses or early relapse.</p>
+
+  <p class="body-text">A second principle is that the two conditions require differently weighted treatment architectures. SSRI withdrawal is primarily a Step 1–2 problem requiring endothelial stabilization and platelet normalization; most patients will not require pharmacological anticoagulation. Long COVID frequently progresses to Steps 3 and 4 and typically requires a layered, longer-duration pharmacological approach.</p>
+
+  <!-- SSRI TREATMENT -->
+  <div id="tx-ssri">
+    <h3 class="sub-heading" style="color:var(--ssri)">Treatment of SSRI Withdrawal: Steps 1–2</h3>
+
+    <h4 class="sub-sub-heading" style="border-left-color:var(--step1)">Phase 1: Foundational Stabilization (Days 0–14)</h4>
+
+    <p class="body-text">The immediate priority in SSRI withdrawal is endothelial and autonomic stabilization. Patients should be counseled that they are experiencing a period of microvascular instability, not neurological damage, which has important implications for their expectations and anxiety management.</p>
+
+    <p class="body-text"><strong>Non-pharmacological stabilization:</strong></p>
+    <ul class="styled-list">
+      <li><em>Hydration:</em> 2–3 litres per day with electrolyte replacement (sodium, potassium, magnesium). Vascular tone is highly sensitive to volume status, and mild dehydration amplifies orthostatic symptoms.</li>
+      <li><em>Sleep schedule consistency:</em> Sleep is the primary regulator of the hypothalamic-pituitary-adrenal axis and sympathetic tone. Disrupted sleep perpetuates the autonomic dysregulation driving endothelial stress.</li>
+      <li><em>Pacing:</em> Patients should be counseled to avoid exertional spikes during the first two weeks. The vascular system's capacity to regulate flow is transiently impaired, and exertion that would be trivially tolerated at baseline can precipitate symptom exacerbation.</li>
+      <li><em>Caffeine and stimulant reduction:</em> Caffeine amplifies sympathetic tone, directly suppressing eNOS activity.</li>
+    </ul>
+
+    <p class="body-text"><strong>Nutritional support:</strong></p>
+    <ul class="styled-list">
+      <li><em>Vitamin K2 (MK-4):</em> High-dose vitamin K2 supports endothelial function through the Gas6/Axl pathway and may improve NO bioavailability.<span class="cite">[18,19]</span> Supplemental doses of 45 mg/day MK-4 have been used empirically. Patients on vitamin K antagonists (warfarin) must not use vitamin K supplementation without specialist guidance.</li>
+      <li><em>Omega-3 fatty acids:</em> Reduce platelet reactivity through eicosanoid pathway modulation. At doses of 2–4 g/day EPA+DHA, meaningful reductions in platelet activation have been documented.<span class="cite">[27]</span></li>
+      <li><em>Magnesium glycinate or malate:</em> Magnesium stabilizes both vascular tone and platelet activation thresholds through calcium-channel-related mechanisms. Deficiency is common and is further depleted by the metabolic stress of withdrawal.<span class="cite">[28]</span></li>
+    </ul>
+
+    <h4 class="sub-sub-heading" style="border-left-color:var(--step2)">Phase 2: Platelet Stabilization (Days 7–21)</h4>
+
+    <p class="body-text">If sensory symptoms (Step 2 pattern: focal pressure, visual distortion, sound sensitivity) persist or dominate after initial stabilization, targeted platelet therapy is warranted.</p>
+
+    <ul class="styled-list">
+      <li><em>Polyphenols (quercetin-type compounds):</em> Quercetin inhibits platelet activation through multiple mechanisms including thromboxane A2 antagonism and phosphodiesterase inhibition. Available over-the-counter; dosing typically 500–1000 mg/day.</li>
+      <li><em>Low-dose aspirin (81 mg/day):</em> For patients with persistent and disabling Step 2 symptoms, low-dose aspirin may be considered. A critical safety caveat applies: SSRIs already deplete platelet serotonin and are independently associated with increased bleeding risk.<span class="cite">[1,5]</span> This decision requires explicit clinical weighting; gastric protection with a PPI is advisable if aspirin is added.</li>
+    </ul>
+
+    <h4 class="sub-sub-heading" style="border-left-color:var(--step3)">Escalation (&gt;4 Weeks, Persistent Symptoms)</h4>
+
+    <p class="body-text">In the small minority of SSRI withdrawal patients with symptoms persisting beyond 4 weeks despite foundational steps—particularly if fibrinogen is elevated—the following escalation pathway applies:</p>
+    <ul class="styled-list">
+      <li>Re-evaluate the SSRI taper strategy: in many cases, persistent symptoms reflect an excessively rapid reduction schedule. Hyperbolic tapering maintains proportional rather than arithmetic dose reductions, reducing symptom emergence.<span class="cite">[29]</span></li>
+      <li>Low-dose statin (clinician-guided): Statins have pleiotropic anti-inflammatory and endothelial-protective effects, including upregulation of eNOS and reduction in vWF secretion.</li>
+      <li>Pharmacological anticoagulation: Required rarely, if at all, in pure SSRI withdrawal. Threshold: persistent disabling symptoms &gt;4 weeks + fibrinogen &gt;4.0 g/L + vWF persistently elevated + failure of Steps 1 and 2. Must be clinician-supervised.</li>
+    </ul>
+  </div>
+
+  <!-- LONG COVID TREATMENT -->
+  <div id="tx-covid">
+    <h3 class="sub-heading" style="color:var(--covid)">Treatment of Long COVID: Steps 1–4</h3>
+
+    <h4 class="sub-sub-heading" style="border-left-color:var(--step1)">Foundation: Layers 1 and 2 (Begin Immediately)</h4>
+
+    <p class="body-text">The same endothelial and platelet stabilization measures described above apply in Long COVID, but serve a different function: not resolving the syndrome but stabilizing the environment to allow pharmacological anticoagulation to work effectively.</p>
+
+    <div class="pull-quote">
+      <p>Pacing is non-negotiable. Post-exertional malaise in Long COVID reflects genuine capillary flow limitation: exertion exceeding oxygen delivery capacity generates ischemia-reperfusion injury that further activates endothelium, releases more vWF, and deepens the microclot burden.<span class="cite">[30]</span> Graded exercise therapy is contraindicated in the PEM phenotype.</p>
+    </div>
+
+    <ul class="styled-list">
+      <li><em>Statins:</em> Should be considered early in Long COVID, given robust evidence for anti-inflammatory, endothelial-protective, and anti-platelet effects across vascular conditions.</li>
+      <li><em>Viral trigger assessment:</em> Herpesvirus reactivation (EBV, CMV) is documented in Long COVID and can perpetuate endothelial activation and ADAMTS13 suppression. If active reactivation is confirmed, antiviral therapy may be appropriate under infectious disease guidance.<span class="cite">[22]</span></li>
+      <li><em>Mast cell activation syndrome (MCAS) overlap:</em> A significant minority of Long COVID patients have concomitant mast cell dysregulation, which independently amplifies vWF release and platelet reactivity. Antihistamine therapy and mast cell stabilizers may substantially reduce the microvascular burden in this subgroup.</li>
+    </ul>
+
+    <h4 class="sub-sub-heading" style="border-left-color:var(--step3)">Layer 3: Anticoagulation for Fibrin Architecture</h4>
+
+    <p class="body-text">The most important evidence base for Long COVID treatment at Steps 3 and 4 comes from Laubscher, Pretorius, Kell, and colleagues.<span class="cite">[31,32]</span> In an uncontrolled cohort study of 91 Long COVID patients, triple anticoagulant therapy—comprising dual antiplatelet therapy (clopidogrel 75 mg + aspirin 75 mg daily) plus apixaban (5 mg twice daily), with concomitant proton pump inhibitor gastric protection—produced resolution of major Long COVID symptoms in the majority of treated patients, accompanied by significant reductions in fibrin amyloid microclot scores and platelet activation markers.<span class="cite">[32]</span></p>
+
+    <div class="callout callout-warn">
+      <strong>⚠️ Important Caveat Regarding Triple Therapy:</strong>
+      This is not an endorsed treatment protocol and has not been validated in a randomized controlled trial. Triple therapy carries meaningful bleeding risk and must only be initiated under strict specialist supervision, with pre-treatment TEG or equivalent coagulation assessment to exclude pre-existing hypocoagulable states.
+    </div>
+
+    <p class="body-text">In my practice, the approach to anticoagulation escalates stepwise:</p>
+    <ul class="styled-list">
+      <li><em>DOAC monotherapy (apixaban 2.5–5 mg twice daily or rivaroxaban 20 mg daily):</em> Initial pharmacological escalation for fibrinogen-elevated, symptom-persistent patients who have not responded to Steps 1 and 2. DOACs reduce thrombin generation, shifting fibrin polymerization toward less dense, fibrinolysis-accessible networks.</li>
+      <li><em>Addition of antiplatelet therapy:</em> If DOAC monotherapy provides partial but incomplete response, low-dose aspirin (75–81 mg) is added. Full dual antiplatelet therapy is undertaken only when persistent platelet hyperactivation is confirmed on flow cytometry or equivalent testing.</li>
+      <li><em>Duration:</em> Patients with symptoms present for &lt;6 months typically require 2–4 months of therapy; those with &gt;6 months of symptoms may require 4–6 months or longer, guided by laboratory and clinical response.<span class="cite">[32]</span></li>
+      <li><em>Monitoring during therapy:</em> A transient rise in D-dimer during treatment is expected and indicates microclot degradation—this is a therapeutic signal, not a complication, unless accompanied by clinical worsening or evidence of major bleeding.</li>
+    </ul>
+
+    <h4 class="sub-sub-heading" style="border-left-color:var(--step4)">Layer 4: Addressing Fibrinolysis Shutdown</h4>
+
+    <p class="body-text">When treatment response plateaus despite anticoagulation—particularly when alpha-2 antiplasmin and PAI-1 remain elevated—the focus shifts to fibrinolysis restoration.</p>
+    <ul class="styled-list">
+      <li><em>PAI-1 reduction:</em> PAI-1 is strongly driven by insulin resistance, metabolic syndrome, and cortisol excess. Aggressive metabolic optimization is a primary intervention. GLP-1 receptor agonists have emerging evidence for PAI-1 reduction in eligible patients under metabolic medicine guidance.</li>
+      <li><em>Mast cell axis:</em> In MCAS-overlap patients, elevated PAI-1 may reflect mast cell-mediated fibrinolysis inhibition; targeting the underlying mast cell dysfunction can unlock the fibrinolytic system.</li>
+      <li><em>Advanced fibrinolysis:</em> Low-dose tPA (Alteplase) has been used in a small number of highly refractory Long COVID cases with demonstrated fibrinolysis failure. This is strictly a hospital-based, specialist-supervised intervention and not an outpatient consideration.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 5 — SAFETY
+══════════════════════════════════════════════════════════════════ -->
+<div id="safety" class="section-block">
+  <div class="section-label">Section 05</div>
+  <h2 class="section-heading">Special Considerations and Safety</h2>
+
+  <h3 class="sub-heading">Bleeding Risk</h3>
+
+  <p class="body-text">The most serious risk in this treatment framework is hemorrhage. The combination of antiplatelet and anticoagulant therapy carries an approximately 2–3-fold increase in major bleeding risk relative to anticoagulation alone.<span class="cite">[33]</span> The following categories require particular caution:</p>
+
+  <div class="callout callout-danger">
+    <strong>⚠️ High-Risk Combinations</strong>
+    <ul class="styled-list" style="margin-top:0.5rem">
+      <li><strong>Patients still on SSRIs:</strong> SSRIs independently increase bleeding risk through platelet serotonin depletion.<span class="cite">[1,3]</span> The combination with antiplatelets is particularly hazardous. Concurrent gastric protection is mandatory; the decision requires explicit clinical weighting.</li>
+      <li><strong>Elderly patients:</strong> Age-related reductions in hepatic and renal clearance of DOACs, combined with increased baseline bleeding risk, require dose adjustment and closer monitoring.</li>
+      <li><strong>Prior GI bleeding or peptic ulcer disease:</strong> Proton pump inhibitor co-prescription is essential if any antiplatelet or anticoagulant therapy is used.</li>
+    </ul>
+  </div>
+
+  <h3 class="sub-heading">Post-Viral Dysautonomia</h3>
+
+  <p class="body-text">Long COVID frequently co-presents with dysautonomia, and treatment of the vascular component without addressing autonomic dysfunction is likely to be insufficient. POTS-type presentations benefit from volume expansion (increased salt and fluid intake), compression garments, and in persistent cases, pharmacological autonomic support (fludrocortisone, beta-blockers, ivabradine under specialist guidance).<span class="cite">[26]</span> The autonomic and microvascular components are mechanistically linked—sympathetic overactivation suppresses eNOS and amplifies the vascular instability—but require parallel rather than sequential attention.</p>
+
+  <h3 class="sub-heading">When to Seek Specialist Input</h3>
+
+  <p class="body-text">Haematology or coagulation medicine consultation is warranted when:</p>
+  <ul class="styled-list">
+    <li>ADAMTS13 activity is &lt;30% (raises the possibility of immune-mediated TTP or severe ADAMTS13 deficiency requiring specific management)</li>
+    <li>The patient has suspected autoantibody-mediated ADAMTS13 inhibition</li>
+    <li>Triple anticoagulant therapy is being considered</li>
+    <li>D-dimer is markedly elevated (&gt;5 mg/L FEU) with clinical concern for macrovascular thrombosis</li>
+    <li>There is unexplained thrombocytopenia in the context of treatment</li>
+  </ul>
+
+  <p class="body-text">Infectious disease consultation is recommended when herpesvirus reactivation is documented or when there is clinical concern for persistent viral reservoir driving ongoing endothelial activation.</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 6 — MONITORING
+══════════════════════════════════════════════════════════════════ -->
+<div id="monitoring" class="section-block">
+  <div class="section-label">Section 06</div>
+  <h2 class="section-heading">Monitoring Response to Treatment</h2>
+
+  <p class="body-text">The sequence in which laboratory markers normalize mirrors the sequence of the underlying pathology: endothelial markers improve before platelet markers, which improve before fibrin-architecture markers, which improve before fibrinolysis markers.</p>
+
+  <div class="monitoring-timeline">
+    <div class="monitor-phase">
+      <div class="monitor-phase-head" style="background:var(--step1)">Earliest Response<span>Days to ~1 week</span></div>
+      <div class="monitor-phase-body">
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step1)">↓</span>vWF activity begins to fall</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step1)">↓</span>CRP may decrease</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step1)">↓</span>MPV may begin to normalize</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step1)">✓</span>Initial symptomatic improvement</div>
+      </div>
+    </div>
+    <div class="monitor-phase" style="border-left:1px solid var(--rule)">
+      <div class="monitor-phase-head" style="background:var(--step2)">Intermediate<span>Weeks 1–4</span></div>
+      <div class="monitor-phase-body">
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step2)">↓</span>Fibrinogen decreases</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step2)">↑</span>vWF:ADAMTS13 ratio improving</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step2)">↓</span>Symptom severity falls</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step2)">↓</span>Fewer post-exertional crashes</div>
+      </div>
+    </div>
+    <div class="monitor-phase" style="border-left:1px solid var(--rule)">
+      <div class="monitor-phase-head" style="background:var(--step4)">Late Resolution<span>Weeks 4–12+</span></div>
+      <div class="monitor-phase-body">
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step4)">↓</span>α2-antiplasmin normalizes</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step4)">↓</span>PAI-1 falls</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step4)">~</span>D-dimer may transiently ↑</div>
+        <div class="monitor-item"><span class="monitor-arrow" style="color:var(--step4)">✓</span>Symptoms approach baseline</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-tip">
+    <strong>Minimum Monitoring Panel (Every 4–6 Weeks During Active Treatment):</strong>
+    vWF activity · ADAMTS13 activity · Fibrinogen · hs-CRP · CBC with MPV. Add alpha-2 antiplasmin and PAI-1 if plateau or slow response is observed.
+  </div>
+
+  <p class="body-text">Patients should be advised that late laboratory normalization—particularly of fibrinolysis markers—often lags behind subjective improvement. Premature cessation of therapy based on symptomatic improvement alone may result in relapse, particularly in Long COVID.</p>
+
+  <div class="callout callout-warn">
+    <strong>⚠️ D-Dimer Rising During Treatment:</strong>
+    A transient rise in D-dimer during anticoagulant therapy is expected and indicates microclot degradation—this is a <em>therapeutic signal</em>, not a complication, unless accompanied by clinical worsening or evidence of major bleeding. Do NOT automatically increase anticoagulation based on D-dimer alone.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     SECTION 7 — CONCLUSIONS
+══════════════════════════════════════════════════════════════════ -->
+<div id="conclusions" class="section-block">
+  <div class="section-label">Section 07</div>
+  <h2 class="section-heading">Conclusions</h2>
+
+  <p class="body-text">SSRI withdrawal and Long COVID share a convergent microvascular bottleneck despite their different etiologies. Both disrupt endothelial NO regulation, perturb platelet behavior, and create conditions favoring pathological fibrin formation and impaired fibrinolysis. The clinical presentation of diffuse neurological-type symptoms with normal standard investigations reflects genuine capillary-level pathology that is simply invisible to conventional testing.</p>
+
+  <p class="body-text">A mechanistic, four-step framework—endothelium/NO → platelet amplification → fibrin architecture → fibrinolysis—provides both diagnostic orientation and treatment sequencing. SSRI withdrawal typically requires intervention at Steps 1 and 2 only, with foundational non-pharmacological measures and careful attention to platelet-serotonin pharmacology. Long COVID frequently requires engagement of all four steps, including anticoagulation and ultimately fibrinolysis restoration in refractory cases.</p>
+
+  <p class="body-text">What is most needed now is rigorous controlled clinical trial evidence. The observational work of Pretorius, Kell, and colleagues represents an important conceptual and clinical foundation, but uncontrolled cohort data cannot resolve the questions of treatment efficacy, optimal duration, patient selection, and safety that are essential for any condition-specific guideline.</p>
+
+  <div class="pull-quote">
+    <p>In the meantime, the framework offered here provides a mechanism-grounded basis for individualized clinical decision-making, with an emphasis on upstream stabilization, safety-conscious escalation, and close laboratory monitoring.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════
+     REFERENCES
+══════════════════════════════════════════════════════════════════ -->
+<div id="references" class="references-section">
+  <div class="references-title">References</div>
+  <ol class="reference-list">
+    <li class="reference-item"><span class="ref-num">1.</span> Hergovich N, et al. Paroxetine decreases platelet serotonin storage and platelet function in human beings. <em>Clin Pharmacol Ther</em>. 2000;68(4):435–442.</li>
+    <li class="reference-item"><span class="ref-num">2.</span> Lesch KP, et al. Primary structure of the human platelet serotonin uptake site: identity with the brain serotonin transporter. <em>J Neurochem</em>. 1993;60(6):2319–2322.</li>
+    <li class="reference-item"><span class="ref-num">3.</span> Bismuth-Evenzal Y, et al. Decreased serotonin content and reduced agonist-induced aggregation in platelets of patients chronically medicated with SSRI drugs. <em>J Affect Disord</em>. 2012;136(1–2):99–103.</li>
+    <li class="reference-item"><span class="ref-num">4.</span> Alderman CP, Seshadri P, Ben-Tovim DI. Effects of serotonin reuptake inhibitors on hemostasis. <em>Ann Pharmacother</em>. 1996;30(11):1232–1234.</li>
+    <li class="reference-item"><span class="ref-num">5.</span> Rao ML, et al. Antidepressant plasma levels and bleeding parameters in patients on selective serotonin reuptake inhibitors. <em>Hum Psychopharmacol</em>. 2004;19(8):547–551.</li>
+    <li class="reference-item"><span class="ref-num">6.</span> Serebruany VL, et al. Platelet/endothelial biomarkers in depressed patients treated with sertraline after acute coronary events (SADHART). <em>Circulation</em>. 2003;108(8):939–944.</li>
+    <li class="reference-item"><span class="ref-num">7.</span> Fava GA, et al. Withdrawal symptoms after selective serotonin reuptake inhibitor discontinuation: a systematic review. <em>Psychother Psychosom</em>. 2015;84(2):72–81.</li>
+    <li class="reference-item"><span class="ref-num">8.</span> Stockings E, Glasziou P. SSRI discontinuation syndrome: the evidence base regarding incidence, symptom type and duration. <em>Aust N Z J Psychiatry</em>. 2018;52(1):9–10.</li>
+    <li class="reference-item"><span class="ref-num">9.</span> Gruetter CA, et al. Relationship between cyclic GMP formation and relaxation of coronary arterial smooth muscle by nitric oxide. <em>J Pharmacol Exp Ther</em>. 1981;219(1):181–186.</li>
+    <li class="reference-item"><span class="ref-num">10.</span> Pretorius E, Vlok M, et al. Persistent clotting protein pathology in Long COVID/PASC is accompanied by increased levels of antiplasmin. <em>Cardiovasc Diabetol</em>. 2021;20(1):172.</li>
+    <li class="reference-item"><span class="ref-num">11.</span> Kell DB, Laubscher GJ, Pretorius E. A central role for amyloid fibrin microclots in long COVID/PASC: origins and therapeutic implications. <em>Biochem J</em>. 2022;479(4):537–559.</li>
+    <li class="reference-item"><span class="ref-num">12.</span> Kruger A, Vlok M, et al. Proteomics of fibrin amyloid microclots in long COVID/PASC shows many entrapped pro-inflammatory molecules. <em>Cardiovasc Diabetol</em>. 2022;21(1):190.</li>
+    <li class="reference-item"><span class="ref-num">13.</span> Grobbelaar LM, et al. SARS-CoV-2 spike protein S1 induces fibrin(ogen) resistant to fibrinolysis. <em>Biosci Rep</em>. 2021;41(8):BSR20210611.</li>
+    <li class="reference-item"><span class="ref-num">14.</span> Libby P, Lüscher T. COVID-19 is, in the end, an endothelial disease. <em>Eur Heart J</em>. 2020;41(32):3038–3044.</li>
+    <li class="reference-item"><span class="ref-num">15.</span> Grobler C, et al. Covid-19: the rollercoaster of fibrin(ogen), D-dimer, vWF, P-selectin and their interactions with endothelial cells, platelets and erythrocytes. <em>Int J Mol Sci</em>. 2020;21(14):5168.</li>
+    <li class="reference-item"><span class="ref-num">16.</span> Qiu C, et al. Vitamin K2 inhibits vascular smooth muscle cell calcification by restoring the Gas6/Axl/Akt anti-apoptotic pathway. <em>Eur J Pharmacol</em>. 2017;795:1–8.</li>
+    <li class="reference-item"><span class="ref-num">17.</span> Hafizi S, Dahlbäck B. Gas6 and protein S: vitamin K-dependent ligands for the Axl receptor tyrosine kinase subfamily. <em>FEBS J</em>. 2006;273(23):5231–5244.</li>
+    <li class="reference-item"><span class="ref-num">18.</span> Bar A, Kus K, et al. Vitamin K2-MK-7 improves nitric oxide-dependent endothelial function in ApoE/LDLR−/− mice. <em>Vascul Pharmacol</em>. 2019;122–123:106581.</li>
+    <li class="reference-item"><span class="ref-num">19.</span> Halder M, et al. Vitamin K: double bonds beyond coagulation — insights into differences between vitamin K1 and K2. <em>Int J Mol Sci</em>. 2019;20(4):896.</li>
+    <li class="reference-item"><span class="ref-num">20.</span> Cauwenberghs S, et al. Shedding of procoagulant microparticles from unstimulated platelets by suicidal platelet apoptosis. <em>Exp Hematol</em>. 2006;34(4):477–486.</li>
+    <li class="reference-item"><span class="ref-num">21.</span> Whyte CS, Mutch NJ. The role of fibrin(ogen) in platelet-mediated clot formation. <em>Thromb Haemost</em>. 2021;121(4):405–408.</li>
+    <li class="reference-item"><span class="ref-num">22.</span> Nunes JM, et al. Herpesvirus infection of endothelial cells as a systemic pathological axis in ME/CFS. <em>Cells</em>. 2022;11(5):794.</li>
+    <li class="reference-item"><span class="ref-num">23.</span> Pretorius E, Vlok M, et al. Persistent clotting protein pathology in Long COVID/PASC is accompanied by increased levels of antiplasmin. <em>Cardiovasc Diabetol</em>. 2021;20(1):172.</li>
+    <li class="reference-item"><span class="ref-num">24.</span> Sartori MT, et al. Plasma fibrinolytic capacity in renal transplant recipients: effect of long-term cyclosporine therapy. <em>Transplantation</em>. 2005;80(7):932–938.</li>
+    <li class="reference-item"><span class="ref-num">25.</span> Davis HE, McCorkell L, et al. Long COVID: major findings, mechanisms and recommendations. <em>Nat Rev Microbiol</em>. 2023;21(3):133–146.</li>
+    <li class="reference-item"><span class="ref-num">26.</span> Raj SR, Arnold AC, et al. Long-COVID postural tachycardia syndrome: an American Autonomic Society statement. <em>Clin Auton Res</em>. 2021;31(3):365–368.</li>
+    <li class="reference-item"><span class="ref-num">27.</span> Larson MK, et al. Effects of omega-3 acid ethyl esters and aspirin on platelet function in healthy subjects. <em>Thromb Haemost</em>. 2008;100(4):634–641.</li>
+    <li class="reference-item"><span class="ref-num">28.</span> Rondón H, Muñoz H, Grases F. The relationship between magnesium deficiency and platelet activation. <em>Magnes Res</em>. 2012;25(2):70–78.</li>
+    <li class="reference-item"><span class="ref-num">29.</span> Horowitz MA, Taylor D. Tapering of SSRI treatment to mitigate withdrawal symptoms. <em>Lancet Psychiatry</em>. 2019;6(7):538–546.</li>
+    <li class="reference-item"><span class="ref-num">30.</span> Kell DB, Pretorius E. The potential role of ischaemia-reperfusion injury in chronic, relapsing diseases such as rheumatoid arthritis, Long COVID, and ME/CFS. <em>Biochem J</em>. 2022;479(19):1653–1708.</li>
+    <li class="reference-item"><span class="ref-num">31.</span> Pretorius E, Venter C, et al. Prevalence of symptoms, comorbidities, fibrin amyloid microclots and platelet pathology in Long COVID/PASC. <em>Cardiovasc Diabetol</em>. 2022;21(1):148.</li>
+    <li class="reference-item"><span class="ref-num">32.</span> Laubscher GJ, Khan MA, et al. Treatment of Long COVID symptoms with triple anticoagulant therapy. <em>Research Square</em> [Preprint]. 2023. DOI: 10.21203/rs.3.rs-2697680/v1.</li>
+    <li class="reference-item"><span class="ref-num">33.</span> Lopes RD, et al. Therapeutic versus prophylactic anticoagulation for patients with COVID-19 and elevated D-dimer (ACTION trial). <em>Lancet</em>. 2021;397(10291):2253–2263.</li>
+  </ol>
+</div>
+
+</div><!-- end article-body -->
+
+<footer>
+  <p style="color:rgba(255,255,255,0.7);font-weight:600;margin-bottom:0.4rem">How I Diagnose and Treat Microvascular Dysfunction in SSRI Withdrawal and Post-Viral Illness</p>
+  <p>Submitted for consideration in the "How I Diagnose and Treat" series</p>
+  <p style="margin-top:0.4rem">For educational and clinical-discussion use only · This article does not constitute medical advice · Controlled clinical trials are urgently needed</p>
+  <p style="margin-top:0.4rem"><a href="../index.html" style="color:#4FC3F7;text-decoration:none;">← All Articles</a></p>
+</footer>
+
+</main>
+</body>
+</html>

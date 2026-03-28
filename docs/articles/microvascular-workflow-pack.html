@@ -1,0 +1,2096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microvascular Dysfunction — Clinical Workflow Pack</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* ── CSS Variables ─────────────────────────────────────────────────────── */
+  :root {
+    --step1: #2E7D32;
+    --step1-light: #E8F5E9;
+    --step1-mid: #A5D6A7;
+    --step2: #E65100;
+    --step2-light: #FFF3E0;
+    --step2-mid: #FFCC80;
+    --step3: #1565C0;
+    --step3-light: #E3F2FD;
+    --step3-mid: #90CAF9;
+    --step4: #B71C1C;
+    --step4-light: #FFEBEE;
+    --step4-mid: #EF9A9A;
+    --ssri: #00695C;
+    --ssri-light: #E0F2F1;
+    --covid: #4527A0;
+    --covid-light: #EDE7F6;
+    --ink: #1A1A2E;
+    --ink-mid: #37474F;
+    --ink-light: #607D8B;
+    --rule: #CFD8DC;
+    --surface: #FAFAFA;
+    --surface-alt: #F0F4F8;
+    --white: #FFFFFF;
+    --warn-bg: #FFF8E1;
+    --warn-border: #F9A825;
+    --danger-bg: #FFEBEE;
+    --danger-border: #C62828;
+    --nav-bg: #0D1B2A;
+    --nav-accent: #4FC3F7;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+    --radius: 6px;
+    --radius-lg: 10px;
+  }
+
+  /* ── Reset & Base ──────────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 15px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+    background: var(--surface);
+    color: var(--ink);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar Navigation ────────────────────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 240px;
+    height: 100vh;
+    background: var(--nav-bg);
+    overflow-y: auto;
+    z-index: 100;
+    padding: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-brand {
+    padding: 1.25rem 1.25rem 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-brand-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--nav-accent);
+    line-height: 1.3;
+  }
+
+  .nav-brand-sub {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.2rem;
+  }
+
+  nav a {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.55rem 1.25rem;
+    text-decoration: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.3;
+    transition: all 0.15s;
+    border-left: 2px solid transparent;
+  }
+
+  nav a:hover {
+    color: var(--white);
+    background: rgba(255,255,255,0.05);
+    border-left-color: var(--nav-accent);
+  }
+
+  nav a .nav-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .nav-section-label {
+    padding: 1rem 1.25rem 0.3rem;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* ── Main Content ──────────────────────────────────────────────────────── */
+  main {
+    margin-left: 240px;
+    flex: 1;
+    max-width: 100%;
+  }
+
+  /* ── Cover Header ──────────────────────────────────────────────────────── */
+  .cover {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1A3A5C 50%, #0D2B3F 100%);
+    color: white;
+    padding: 3.5rem 4rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border: 80px solid rgba(79,195,247,0.06);
+    border-radius: 50%;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 30%;
+    width: 200px; height: 200px;
+    border: 40px solid rgba(79,195,247,0.04);
+    border-radius: 50%;
+  }
+
+  .cover-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--nav-accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .cover h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.6rem;
+    line-height: 1.15;
+    color: white;
+    margin-bottom: 0.75rem;
+    max-width: 680px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cover-tagline {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.65);
+    max-width: 540px;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .cover-badges {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge {
+    padding: 0.4rem 1rem;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-ssri { background: var(--ssri); color: white; }
+  .badge-covid { background: var(--covid); color: white; }
+  .badge-step1 { background: var(--step1); color: white; }
+  .badge-step2 { background: var(--step2); color: white; }
+  .badge-step3 { background: var(--step3); color: white; }
+  .badge-step4 { background: var(--step4); color: white; }
+
+  .disclaimer-banner {
+    background: rgba(249,168,37,0.12);
+    border: 1px solid rgba(249,168,37,0.3);
+    border-radius: var(--radius);
+    padding: 0.85rem 1.1rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 720px;
+    line-height: 1.5;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Page Sections ─────────────────────────────────────────────────────── */
+  .section {
+    padding: 3rem 4rem;
+    border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .section:nth-child(even) { background: var(--white); }
+  .section:nth-child(odd) { background: var(--surface); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-number {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.7rem;
+    color: var(--ink);
+    margin-bottom: 0.35rem;
+    line-height: 1.2;
+  }
+
+  .section-intro {
+    font-size: 0.88rem;
+    color: var(--ink-mid);
+    max-width: 700px;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+  }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 1.5rem 0 0.6rem;
+  }
+
+  h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin: 1rem 0 0.4rem;
+  }
+
+  p {
+    font-size: 0.88rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── Tables ────────────────────────────────────────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0 1.5rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--rule);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    background: white;
+  }
+
+  thead th {
+    padding: 0.65rem 0.9rem;
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  tbody td {
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(0,0,0,0.015); }
+
+  .th-step1 { background: var(--step1); color: white; }
+  .th-step2 { background: var(--step2); color: white; }
+  .th-step3 { background: var(--step3); color: white; }
+  .th-step4 { background: var(--step4); color: white; }
+  .th-dark   { background: var(--ink); color: white; }
+  .th-ssri   { background: var(--ssri); color: white; }
+  .th-covid  { background: var(--covid); color: white; }
+
+  .td-step1 { background: var(--step1-light); color: var(--step1); font-weight: 600; }
+  .td-step2 { background: var(--step2-light); color: var(--step2); font-weight: 600; }
+  .td-step3 { background: var(--step3-light); color: var(--step3); font-weight: 600; }
+  .td-step4 { background: var(--step4-light); color: var(--step4); font-weight: 600; }
+
+  .score-cell {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  /* ── Step Cards ────────────────────────────────────────────────────────── */
+  .step-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .step-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--rule);
+  }
+
+  .step-card-header {
+    padding: 0.85rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .step-badge {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .step-card-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
+  }
+
+  .step-card-subtitle {
+    font-size: 0.72rem;
+    opacity: 0.8;
+    color: white;
+  }
+
+  .step-card-body {
+    padding: 1rem 1.1rem;
+    background: white;
+  }
+
+  .step-card-body h4 {
+    margin-top: 0;
+    font-size: 0.7rem;
+  }
+
+  .step-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.75rem;
+  }
+
+  .step-card li {
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    padding: 0.2rem 0 0.2rem 1rem;
+    position: relative;
+    line-height: 1.4;
+  }
+
+  .step-card li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--ink-light);
+    font-size: 0.72rem;
+  }
+
+  .step1-card .step-card-header { background: var(--step1); }
+  .step2-card .step-card-header { background: var(--step2); }
+  .step3-card .step-card-header { background: var(--step3); }
+  .step4-card .step-card-header { background: var(--step4); }
+  .step1-card .step-badge { background: rgba(0,0,0,0.2); }
+  .step2-card .step-badge { background: rgba(0,0,0,0.2); }
+  .step3-card .step-badge { background: rgba(0,0,0,0.2); }
+  .step4-card .step-badge { background: rgba(0,0,0,0.2); }
+
+  /* ── Flow Arrow ────────────────────────────────────────────────────────── */
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 1rem 0 1.5rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .flow-step {
+    flex: 1;
+    padding: 0.9rem 0.75rem;
+    text-align: center;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .flow-step span {
+    display: block;
+    font-size: 0.65rem;
+    opacity: 0.8;
+    font-weight: 400;
+    margin-top: 0.15rem;
+  }
+
+  .flow-arrow-sep {
+    width: 0; height: 0;
+    border-top: 24px solid transparent;
+    border-bottom: 24px solid transparent;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  /* ── Protocol Sections ─────────────────────────────────────────────────── */
+  .protocol-header {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0;
+  }
+
+  .protocol-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .protocol-header p {
+    color: rgba(255,255,255,0.75);
+    margin: 0;
+    font-size: 0.78rem;
+  }
+
+  .protocol-body {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: none;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ssri-header { background: var(--ssri); }
+  .covid-header { background: var(--covid); }
+  .step1-header { background: var(--step1); }
+  .step2-header { background: var(--step2); }
+  .step3-header { background: var(--step3); }
+  .step4-header { background: var(--step4); }
+
+  /* ── Phase Cards ───────────────────────────────────────────────────────── */
+  .phase-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 0.75rem 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .phase-label {
+    padding: 0.6rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.04em;
+  }
+
+  .phase-content {
+    background: white;
+    border: 1px solid var(--rule);
+    border-top: none;
+    padding: 0.9rem 1rem;
+  }
+
+  .phase-content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .phase-content li {
+    font-size: 0.82rem;
+    color: var(--ink-mid);
+    padding: 0.22rem 0 0.22rem 1.1rem;
+    position: relative;
+    line-height: 1.45;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .phase-content li:last-child { border-bottom: none; }
+
+  .phase-content li::before {
+    content: '•';
+    position: absolute;
+    left: 0.2rem;
+    color: var(--ink-light);
+    font-size: 0.85rem;
+  }
+
+  /* ── Alert Boxes ───────────────────────────────────────────────────────── */
+  .alert {
+    border-radius: var(--radius);
+    padding: 0.85rem 1rem 0.85rem 1.1rem;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin: 0.75rem 0;
+    border-left: 4px solid;
+  }
+
+  .alert strong { display: block; margin-bottom: 0.2rem; }
+
+  .alert-warn {
+    background: var(--warn-bg);
+    border-color: var(--warn-border);
+    color: #4A3300;
+  }
+
+  .alert-danger {
+    background: var(--danger-bg);
+    border-color: var(--danger-border);
+    color: #5C0000;
+  }
+
+  .alert-info {
+    background: var(--step3-light);
+    border-color: var(--step3);
+    color: #0A2A5C;
+  }
+
+  .alert-success {
+    background: var(--step1-light);
+    border-color: var(--step1);
+    color: #0A2E0F;
+  }
+
+  /* ── Escalation Rules ──────────────────────────────────────────────────── */
+  .escalation-rule {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin: 0.6rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .esc-if {
+    padding: 0.75rem 1rem;
+    background: var(--surface-alt);
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    border-right: 1px solid var(--rule);
+  }
+
+  .esc-then {
+    padding: 0.75rem 1rem;
+    background: white;
+    font-size: 0.8rem;
+    color: var(--ink);
+  }
+
+  .esc-if strong, .esc-then strong {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .esc-note {
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-top: 0.3rem;
+  }
+
+  /* ── Drug Table ────────────────────────────────────────────────────────── */
+  .use-pill {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 100px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .use-strong { background: var(--step1-light); color: var(--step1); }
+  .use-moderate { background: var(--step2-light); color: var(--step2); }
+  .use-rare { background: var(--surface-alt); color: var(--ink-light); }
+  .use-caution { background: var(--danger-bg); color: var(--step4); }
+
+  /* ── Symptom Mapper ────────────────────────────────────────────────────── */
+  .mapper-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 1.5rem;
+  }
+
+  .mapper-card {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--rule);
+  }
+
+  .mapper-head {
+    padding: 0.85rem 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+  }
+
+  .mapper-step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  .mapper-head-title { color: white; font-size: 0.85rem; font-weight: 700; }
+  .mapper-head-sub   { color: rgba(255,255,255,0.75); font-size: 0.72rem; }
+
+  .mapper-body { background: white; padding: 0.9rem 1rem; }
+
+  .mapper-symptoms {
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    margin-bottom: 0.75rem;
+  }
+
+  .mapper-sym-item {
+    padding: 0.18rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .mapper-sym-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .mapper-actions {
+    background: var(--surface-alt);
+    border-radius: var(--radius);
+    padding: 0.6rem 0.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .mapper-action-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .mapper-action-item {
+    font-size: 0.78rem;
+    color: var(--ink);
+    padding: 0.15rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .mapper-action-item::before {
+    content: '→';
+    color: var(--ink-light);
+    flex-shrink: 0;
+    font-size: 0.72rem;
+    margin-top: 0.1rem;
+  }
+
+  .step1-mapper .mapper-head { background: var(--step1); }
+  .step2-mapper .mapper-head { background: var(--step2); }
+  .step3-mapper .mapper-head { background: var(--step3); }
+  .step4-mapper .mapper-head { background: var(--step4); }
+  .step1-mapper .mapper-sym-dot { background: var(--step1); }
+  .step2-mapper .mapper-sym-dot { background: var(--step2); }
+  .step3-mapper .mapper-sym-dot { background: var(--step3); }
+  .step4-mapper .mapper-sym-dot { background: var(--step4); }
+
+  /* ── Monitoring Timeline ───────────────────────────────────────────────── */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--rule);
+    margin: 1rem 0 1.5rem;
+  }
+
+  .timeline-col { }
+
+  .timeline-head {
+    padding: 0.85rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+    text-align: center;
+  }
+
+  .timeline-body {
+    background: white;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .timeline-item {
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    padding: 0.22rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .timeline-item:last-child { border-bottom: none; }
+
+  .timeline-arrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* ── Tracking Table ────────────────────────────────────────────────────── */
+  .track-step-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+
+  /* ── Assessment Form ───────────────────────────────────────────────────── */
+  .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .form-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .form-grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+
+  .form-field label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-light);
+    margin-bottom: 0.3rem;
+  }
+
+  .form-field input[type="text"],
+  .form-field textarea,
+  .form-field select {
+    width: 100%;
+    border: 1.5px solid var(--rule);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.7rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--ink);
+    background: white;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    outline: none;
+  }
+
+  .form-field input[type="text"]:focus,
+  .form-field textarea:focus {
+    border-color: var(--step3);
+    box-shadow: 0 0 0 3px rgba(21,101,192,0.1);
+  }
+
+  .form-field textarea { min-height: 70px; resize: vertical; line-height: 1.5; }
+
+  .score-result-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    margin: 1rem 0;
+  }
+
+  .score-result-col {
+    padding: 0.9rem 0.5rem;
+    text-align: center;
+  }
+
+  .score-result-col label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
+    color: white;
+  }
+
+  .score-result-col input {
+    width: 100%;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: var(--radius);
+    padding: 0.45rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    outline: none;
+  }
+
+  .score-result-col input::placeholder { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+  .score-result-col input:focus { border-color: white; }
+
+  .score-s1 { background: var(--step1); }
+  .score-s2 { background: var(--step2); }
+  .score-s3 { background: var(--step3); }
+  .score-s4 { background: var(--step4); }
+  .score-dom { background: var(--ink); }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .check-group {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+  }
+
+  .check-group-header {
+    padding: 0.6rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .check-count-label {
+    font-size: 0.65rem;
+    opacity: 0.85;
+    font-weight: 400;
+  }
+
+  .check-group-body { background: white; padding: 0.6rem 0.85rem; }
+
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.32rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    cursor: pointer;
+  }
+
+  .check-item:last-child { border-bottom: none; }
+
+  .check-item input[type="checkbox"] {
+    width: 15px; height: 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    accent-color: var(--step1);
+    flex-shrink: 0;
+  }
+
+  .check-item label {
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    cursor: pointer;
+    line-height: 1.3;
+  }
+
+  .check-group-s1 .check-group-header { background: var(--step1); }
+  .check-group-s2 .check-group-header { background: var(--step2); }
+  .check-group-s3 .check-group-header { background: var(--step3); }
+  .check-group-s4 .check-group-header { background: var(--step4); }
+  .check-group-s1 .check-item input { accent-color: var(--step1); }
+  .check-group-s2 .check-item input { accent-color: var(--step2); }
+  .check-group-s3 .check-item input { accent-color: var(--step3); }
+  .check-group-s4 .check-item input { accent-color: var(--step4); }
+
+  .safety-flags {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .safety-flag {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.65rem 0.85rem;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    border-radius: var(--radius);
+  }
+
+  .safety-flag input { flex-shrink: 0; accent-color: var(--step4); margin-top: 0.1rem; }
+  .safety-flag label { font-size: 0.78rem; color: var(--step4); cursor: pointer; line-height: 1.4; }
+
+  /* ── Side-by-side comparison ───────────────────────────────────────────── */
+  .compare-table thead th:first-child { background: var(--ink); }
+  .compare-table thead th:nth-child(2) { background: var(--ssri); }
+  .compare-table thead th:nth-child(3) { background: var(--covid); }
+
+  /* ── Utility ───────────────────────────────────────────────────────────── */
+  .mono { font-family: 'IBM Plex Mono', monospace; }
+  .text-sm { font-size: 0.8rem; }
+  .text-xs { font-size: 0.72rem; }
+  .text-muted { color: var(--ink-light); }
+  .fw-600 { font-weight: 600; }
+
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8em;
+    background: var(--surface-alt);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    color: var(--step3);
+  }
+
+  .divider { height: 1px; background: var(--rule); margin: 1.5rem 0; }
+
+  /* ── Footer ────────────────────────────────────────────────────────────── */
+  footer {
+    background: var(--nav-bg);
+    color: rgba(255,255,255,0.4);
+    padding: 2rem 4rem;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  /* ── Print ─────────────────────────────────────────────────────────────── */
+  @media print {
+    nav { display: none; }
+    main { margin-left: 0; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .section { page-break-inside: avoid; }
+    .step-grid, .mapper-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── Responsive ────────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    nav { display: none; }
+    main { margin-left: 0; }
+    .cover { padding: 2rem 1.5rem; }
+    .section { padding: 2rem 1.5rem; }
+    .step-grid, .mapper-grid, .checklist-grid { grid-template-columns: 1fr; }
+    .timeline-grid { grid-template-columns: 1fr; }
+    .form-grid-2, .form-grid-3, .form-grid-4, .form-grid-5 { grid-template-columns: 1fr 1fr; }
+    .score-result-grid { grid-template-columns: repeat(3, 1fr); }
+    .escalation-rule { grid-template-columns: 1fr; }
+    .safety-flags { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ──────────────────────────────────────────────────────────── -->
+<nav>
+  <a href="../index.html" class="nav-brand" style="display:block;text-decoration:none;">
+    <div class="nav-brand-title">Microvascular Dysfunction<br>Clinical Workflow Pack</div>
+    <div class="nav-brand-sub">For clinician use only</div>
+  </a>
+
+  <div class="nav-section-label">Site</div>
+  <a href="../index.html" class="nav-link" style="display:flex;align-items:flex-start;gap:0.55rem;padding:0.5rem 1.25rem;text-decoration:none;color:rgba(255,255,255,0.55);font-size:0.73rem;border-left:2px solid transparent;transition:all 0.15s;">
+    <span class="nav-num">↩</span><span>All Articles</span>
+  </a>
+
+  <div class="nav-section-label">Scoring & Mechanism</div>
+  <a href="#scoring"><span class="nav-num">01</span>Auto-Scoring System</a>
+  <a href="#mechanism"><span class="nav-num">02</span>4-Step Mechanism Map</a>
+  <a href="#labs"><span class="nav-num">03</span>Lab Panel & Thresholds</a>
+
+  <div class="nav-section-label">Protocols</div>
+  <a href="#ssri"><span class="nav-num">04</span>SSRI Withdrawal Protocol</a>
+  <a href="#covid"><span class="nav-num">05</span>Long COVID Protocol</a>
+  <a href="#escalation"><span class="nav-num">06</span>Escalation Rules</a>
+  <a href="#drugs"><span class="nav-num">07</span>Drug Algorithm</a>
+
+  <div class="nav-section-label">Clinical Tools</div>
+  <a href="#mapper"><span class="nav-num">08</span>Symptom → Step Mapper</a>
+  <a href="#monitoring"><span class="nav-num">09</span>Treatment Monitoring</a>
+  <a href="#assessment"><span class="nav-num">10</span>Patient Assessment</a>
+</nav>
+
+<!-- ── MAIN ────────────────────────────────────────────────────────────────── -->
+<main>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">Clinical Decision Support Framework</div>
+  <h1>Microvascular Dysfunction<br>Clinical Workflow Pack</h1>
+  <p class="cover-tagline">Auto-Scoring · Escalation Rules · Lab Thresholds · Mechanism-Based Treatment</p>
+  <div class="cover-badges">
+    <span class="badge badge-ssri">SSRI Withdrawal</span>
+    <span class="badge badge-covid">Long COVID / Post-Viral</span>
+    <span class="badge badge-step1">Step 1 Endothelium</span>
+    <span class="badge badge-step2">Step 2 Platelets</span>
+    <span class="badge badge-step3">Step 3 Fibrin</span>
+    <span class="badge badge-step4">Step 4 Fibrinolysis</span>
+  </div>
+  <div class="disclaimer-banner">
+    ⚠️ <strong style="color:rgba(255,255,255,0.9)">Disclaimer:</strong> This is a clinical decision-support framework based on emerging mechanistic research. It does not constitute medical advice or a prescription. All treatment decisions must be made by a licensed clinician with full knowledge of the individual patient's history, contraindications, and risk factors. No clinical trials have validated this protocol as a complete system.
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 1 — AUTO-SCORING SYSTEM
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="scoring">
+  <div class="section-number">Section 01</div>
+  <h2>Auto-Scoring System</h2>
+  <p class="section-intro">Mark each symptom present <strong>(1 point each)</strong>. Enter lab values where available <strong>(+2 points each)</strong>. Total each step column. <strong>Highest total = Dominant Step.</strong> Ties → treat the lower-numbered step first.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="background:#455A64;color:white;width:38%">Symptom / Marker</th>
+          <th class="th-step1" style="text-align:center;width:15%">Step 1 🟢<br><span style="font-weight:400;font-size:0.68rem">Endothelium</span></th>
+          <th class="th-step2" style="text-align:center;width:15%">Step 2 🟠<br><span style="font-weight:400;font-size:0.68rem">Platelets</span></th>
+          <th class="th-step3" style="text-align:center;width:15%">Step 3 🔵<br><span style="font-weight:400;font-size:0.68rem">Fibrin</span></th>
+          <th class="th-step4" style="text-align:center;width:15%">Step 4 🔴<br><span style="font-weight:400;font-size:0.68rem">Fibrinolysis</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Diffuse head pressure</td><td class="score-cell" style="background:var(--step1-light);color:var(--step1)">☐ +1</td><td></td><td></td><td></td></tr>
+        <tr><td>Light sensitivity (non-migraine)</td><td class="score-cell" style="background:var(--step1-light);color:var(--step1)">☐ +1</td><td></td><td></td><td></td></tr>
+        <tr><td>Orthostatic dizziness / heat intolerance</td><td class="score-cell" style="background:var(--step1-light);color:var(--step1)">☐ +1</td><td></td><td></td><td></td></tr>
+        <tr><td>Air hunger / BP or pulse fluctuation</td><td class="score-cell" style="background:var(--step1-light);color:var(--step1)">☐ +1</td><td></td><td></td><td></td></tr>
+        <tr><td>Pressure behind one eye / temple</td><td></td><td class="score-cell" style="background:var(--step2-light);color:var(--step2)">☐ +1</td><td></td><td></td></tr>
+        <tr><td>Visual brightness / contrast distortion</td><td></td><td class="score-cell" style="background:var(--step2-light);color:var(--step2)">☐ +1</td><td></td><td></td></tr>
+        <tr><td>Sound sensitivity / derealization</td><td></td><td class="score-cell" style="background:var(--step2-light);color:var(--step2)">☐ +1</td><td></td><td></td></tr>
+        <tr><td>Tingling or buzzing sensations</td><td></td><td class="score-cell" style="background:var(--step2-light);color:var(--step2)">☐ +1</td><td></td><td></td></tr>
+        <tr><td>Brain fog / word-finding difficulty</td><td></td><td></td><td class="score-cell" style="background:var(--step3-light);color:var(--step3)">☐ +1</td><td></td></tr>
+        <tr><td>Mental fatigue disproportionate to effort</td><td></td><td></td><td class="score-cell" style="background:var(--step3-light);color:var(--step3)">☐ +1</td><td></td></tr>
+        <tr><td>Exercise intolerance / post-exertional malaise</td><td></td><td></td><td class="score-cell" style="background:var(--step3-light);color:var(--step3)">☐ +1</td><td></td></tr>
+        <tr><td>"Low oxygen" feeling without hypoxia</td><td></td><td></td><td class="score-cell" style="background:var(--step3-light);color:var(--step3)">☐ +1</td><td></td></tr>
+        <tr><td>Plateaued recovery despite effort</td><td></td><td></td><td></td><td class="score-cell" style="background:var(--step4-light);color:var(--step4)">☐ +1</td></tr>
+        <tr><td>Waxing/waning without clear triggers</td><td></td><td></td><td></td><td class="score-cell" style="background:var(--step4-light);color:var(--step4)">☐ +1</td></tr>
+        <tr><td>Cold extremities / poor peripheral circulation</td><td></td><td></td><td></td><td class="score-cell" style="background:var(--step4-light);color:var(--step4)">☐ +1</td></tr>
+        <tr><td>Symptoms don't clear with rest</td><td></td><td></td><td></td><td class="score-cell" style="background:var(--step4-light);color:var(--step4)">☐ +1</td></tr>
+        <tr style="border-top:2px dashed var(--rule)">
+          <td style="font-size:0.78rem;color:var(--ink-light);font-style:italic">LAB: vWF antigen/activity ↑</td>
+          <td class="score-cell" style="background:var(--step1-light);color:var(--step1);font-weight:700">+2</td><td></td><td></td><td></td>
+        </tr>
+        <tr><td style="font-size:0.78rem;color:var(--ink-light);font-style:italic">LAB: ADAMTS13 low-normal</td><td class="score-cell" style="background:var(--step1-light);color:var(--step1);font-weight:700">+2</td><td></td><td></td><td></td></tr>
+        <tr><td style="font-size:0.78rem;color:var(--ink-light);font-style:italic">LAB: MPV elevated</td><td></td><td class="score-cell" style="background:var(--step2-light);color:var(--step2);font-weight:700">+2</td><td></td><td></td></tr>
+        <tr><td style="font-size:0.78rem;color:var(--ink-light);font-style:italic">LAB: Fibrinogen ↑</td><td></td><td></td><td class="score-cell" style="background:var(--step3-light);color:var(--step3);font-weight:700">+2</td><td></td></tr>
+        <tr><td style="font-size:0.78rem;color:var(--ink-light);font-style:italic">LAB: α2-antiplasmin ↑</td><td></td><td></td><td></td><td class="score-cell" style="background:var(--step4-light);color:var(--step4);font-weight:700">+2</td></tr>
+        <tr><td style="font-size:0.78rem;color:var(--ink-light);font-style:italic">LAB: PAI-1 ↑</td><td></td><td></td><td></td><td class="score-cell" style="background:var(--step4-light);color:var(--step4);font-weight:700">+2</td></tr>
+        <tr style="border-top:2px solid var(--rule);background:var(--surface-alt)">
+          <td style="font-weight:700;font-size:0.85rem">TOTAL SCORE →</td>
+          <td class="score-cell" style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--step1);text-align:center">____</td>
+          <td class="score-cell" style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--step2);text-align:center">____</td>
+          <td class="score-cell" style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--step3);text-align:center">____</td>
+          <td class="score-cell" style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:700;color:var(--step4);text-align:center">____</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Dominant Step Action Guide</h3>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;margin-top:0.75rem">
+    <div style="background:var(--step1);border-radius:var(--radius-lg);padding:1rem;color:white;text-align:center">
+      <div style="font-size:0.68rem;opacity:0.8;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem">Step 1 Highest</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem">Endothelium / NO</div>
+      <div style="font-size:0.75rem;opacity:0.85;line-height:1.4">Start: NO + endothelial support</div>
+    </div>
+    <div style="background:var(--step2);border-radius:var(--radius-lg);padding:1rem;color:white;text-align:center">
+      <div style="font-size:0.68rem;opacity:0.8;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem">Step 2 Highest</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem">Platelet Stabilization</div>
+      <div style="font-size:0.75rem;opacity:0.85;line-height:1.4">Add: omega-3, magnesium</div>
+    </div>
+    <div style="background:var(--step3);border-radius:var(--radius-lg);padding:1rem;color:white;text-align:center">
+      <div style="font-size:0.68rem;opacity:0.8;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem">Step 3 Highest</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem">Anti-inflammatory</div>
+      <div style="font-size:0.75rem;opacity:0.85;line-height:1.4">Consider anticoagulation eval</div>
+    </div>
+    <div style="background:var(--step4);border-radius:var(--radius-lg);padding:1rem;color:white;text-align:center">
+      <div style="font-size:0.68rem;opacity:0.8;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.4rem">Step 4 Highest</div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:0.4rem">Specialist Escalation</div>
+      <div style="font-size:0.75rem;opacity:0.85;line-height:1.4">Fibrinolysis evaluation</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 2 — MECHANISM MAP
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="mechanism">
+  <div class="section-number">Section 02</div>
+  <h2>4-Step Mechanism Map</h2>
+  <p class="section-intro">The microvascular dysfunction cascade. <strong>Treat upstream first</strong> — do NOT jump to Step 3/4 without addressing Step 1/2.</p>
+
+  <div class="flow-arrow">
+    <div class="flow-step" style="background:var(--step1)">Step 1<span>Endothelium / NO</span></div>
+    <div class="flow-arrow-sep" style="border-left-color:var(--step1);border-left-width:14px;border-left-style:solid;"></div>
+    <div class="flow-step" style="background:var(--step2)">Step 2<span>Platelets / PMPs</span></div>
+    <div class="flow-arrow-sep" style="border-left-color:var(--step2);border-left-width:14px;border-left-style:solid;"></div>
+    <div class="flow-step" style="background:var(--step3)">Step 3<span>Fibrin Structure</span></div>
+    <div class="flow-arrow-sep" style="border-left-color:var(--step3);border-left-width:14px;border-left-style:solid;"></div>
+    <div class="flow-step" style="background:var(--step4)">Step 4<span>Fibrinolysis</span></div>
+  </div>
+
+  <div class="step-grid">
+    <div class="step-card step1-card">
+      <div class="step-card-header">
+        <div class="step-badge">1</div>
+        <div><div class="step-card-title">Endothelium / NO</div><div class="step-card-subtitle">vWF Release & Nitric Oxide</div></div>
+      </div>
+      <div class="step-card-body">
+        <h4>Mechanism</h4>
+        <ul>
+          <li>↓ Nitric oxide (NO) → endothelial dysfunction</li>
+          <li>↑ vWF secretion from stressed endothelial cells</li>
+          <li>Platelet inhibition reduced (NO deficit)</li>
+          <li>Autonomic rebound → vasoconstriction</li>
+          <li>Sources: SSRI withdrawal, viral injury, oxidative stress</li>
+        </ul>
+        <h4>Lab Signals</h4>
+        <ul>
+          <li>vWF antigen/activity &gt;150% of normal</li>
+          <li>CRP &gt;3 mg/L</li>
+          <li>ADAMTS13 low-normal (&lt;60% activity)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card step2-card">
+      <div class="step-card-header">
+        <div class="step-badge">2</div>
+        <div><div class="step-card-title">Platelet Amplification</div><div class="step-card-subtitle">PMP Release & vWF Interaction</div></div>
+      </div>
+      <div class="step-card-body">
+        <h4>Mechanism</h4>
+        <ul>
+          <li>Dysregulated platelets from SSRI-depleted serotonin</li>
+          <li>Platelets bind ultra-large vWF (UL-vWF) strings</li>
+          <li>Platelet microparticles (PMPs) shed — mobile clotting platforms</li>
+          <li>PMPs bind vWF → seed dense micro-aggregation scaffolds</li>
+          <li>Gas6 (vitamin K-dependent) signaling disrupted</li>
+        </ul>
+        <h4>Lab Signals</h4>
+        <ul>
+          <li>MPV elevated (&gt;11 fL)</li>
+          <li>Platelet count normal (distinguishes from TTP)</li>
+          <li>vWF still elevated</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card step3-card">
+      <div class="step-card-header">
+        <div class="step-badge">3</div>
+        <div><div class="step-card-title">Fibrin Structure</div><div class="step-card-subtitle">Dense Clot Formation</div></div>
+      </div>
+      <div class="step-card-body">
+        <h4>Mechanism</h4>
+        <ul>
+          <li>Thrombin generation ↑ (from PMP phosphatidylserine)</li>
+          <li>Fibrin polymerization altered → denser, tighter networks</li>
+          <li>Amyloid-like fibrin in severe/prolonged states (Long COVID)</li>
+          <li>Capillary flow limited → oxygen delivery uneven</li>
+          <li>Post-exertional worsening pattern emerges</li>
+        </ul>
+        <h4>Lab Signals</h4>
+        <ul>
+          <li>Fibrinogen &gt;4.0 g/L</li>
+          <li>D-dimer normal or mildly elevated (&lt;1 mg/L FEU)</li>
+          <li>CRP often still elevated</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step-card step4-card">
+      <div class="step-card-header">
+        <div class="step-badge">4</div>
+        <div><div class="step-card-title">Fibrinolysis Shutdown</div><div class="step-card-subtitle">α2-Antiplasmin / PAI-1 Lock</div></div>
+      </div>
+      <div class="step-card-body">
+        <h4>Mechanism</h4>
+        <ul>
+          <li>α2-antiplasmin cross-linked into fibrin by Factor XIII</li>
+          <li>PAI-1 ↑ → plasminogen activator inhibited → no plasmin</li>
+          <li>Microclots become plasmin-resistant → persist in capillaries</li>
+          <li>Fluctuating symptoms: partial obstruction → brief relief cycles</li>
+          <li>Self-sustaining loop unless upstream drivers addressed</li>
+        </ul>
+        <h4>Lab Signals</h4>
+        <ul>
+          <li>α2-antiplasmin &gt;120% activity</li>
+          <li>PAI-1 &gt;50 ng/mL</li>
+          <li>D-dimer LOW despite persistent symptoms</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 3 — LAB PANEL
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="labs">
+  <div class="section-number">Section 03</div>
+  <h2>Lab Panel &amp; Thresholds</h2>
+  <p class="section-intro">LifeLabs (Canada) and Labcorp (US) codes with clinical action thresholds.</p>
+
+  <div class="alert alert-warn">
+    <strong>⚠️ Key Insight: PT/INR/aPTT are often NORMAL in this pattern.</strong>
+    These tests measure bulk coagulation cascades, not platelet–vWF dynamics, fibrin architecture, or fibrinolysis resistance. A normal clotting panel does <strong>not</strong> rule out microvascular dysfunction.
+  </div>
+
+  <h3>Core Panel — Order First</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-dark">Test</th>
+          <th class="th-dark">LifeLabs</th>
+          <th class="th-dark">Labcorp #</th>
+          <th class="th-dark">Action Threshold</th>
+          <th class="th-dark">Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>vWF Antigen</strong></td><td class="mono text-sm">vWF Antigen</td><td class="mono text-sm">086280</td><td>&gt;150% of normal</td><td>Endothelial activation; key Step 1 marker</td></tr>
+        <tr><td><strong>vWF Activity (Ristocetin)</strong></td><td class="mono text-sm">vWF Activity</td><td class="mono text-sm">086264</td><td>&gt;150% activity</td><td>Functional vWF; compare to antigen ratio</td></tr>
+        <tr><td><strong>ADAMTS13 Activity</strong></td><td class="mono text-sm">Send-out (spec. coag)</td><td class="mono text-sm">117913</td><td>&lt;60% activity</td><td>Low relative to vWF = critical imbalance</td></tr>
+        <tr><td><strong>D-Dimer</strong></td><td class="mono text-sm">D-Dimer</td><td class="mono text-sm">115188</td><td>&gt;0.5 mg/L FEU</td><td>Active clot turnover; normal ≠ rules out microclots</td></tr>
+        <tr><td><strong>Fibrinogen (Clauss)</strong></td><td class="mono text-sm">Fibrinogen</td><td class="mono text-sm">001610</td><td>&gt;4.0 g/L</td><td>Dense clot tendency; Step 3 marker</td></tr>
+        <tr><td><strong>CBC + MPV</strong></td><td class="mono text-sm">CBC w/ diff</td><td class="mono text-sm">005009</td><td>MPV &gt;11 fL</td><td>Reactive platelets; count usually normal</td></tr>
+        <tr><td><strong>hs-CRP</strong></td><td class="mono text-sm">hs-CRP</td><td class="mono text-sm">120766</td><td>&gt;3 mg/L</td><td>Inflammatory driver of Steps 1–3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Extended Panel — Add if Core Abnormal</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-step4">Test</th>
+          <th class="th-step4">LifeLabs</th>
+          <th class="th-step4">Labcorp #</th>
+          <th class="th-step4">Action Threshold</th>
+          <th class="th-step4">Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>α2-Antiplasmin activity</strong></td><td class="mono text-sm">Specialty coag (send)</td><td class="mono text-sm">500540</td><td>&gt;120% activity</td><td>Fibrinolysis inhibition; Step 4 marker</td></tr>
+        <tr><td><strong>PAI-1</strong></td><td class="mono text-sm">Limited availability</td><td class="mono text-sm">500512</td><td>&gt;50 ng/mL</td><td>Blocks plasmin generation; Step 4 marker</td></tr>
+        <tr><td><strong>Plasminogen Activity</strong></td><td class="mono text-sm">Send-out</td><td class="mono text-sm">500538</td><td>&lt;70% activity</td><td>Reduced fibrinolytic capacity</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Contextual / Viral — Order if Clinically Indicated</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="background:#37474F;color:white">Test</th>
+          <th style="background:#37474F;color:white">LifeLabs</th>
+          <th style="background:#37474F;color:white">Labcorp #</th>
+          <th style="background:#37474F;color:white">Threshold</th>
+          <th style="background:#37474F;color:white">Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>EBV (VCA IgM/IgG, EBNA)</strong></td><td>EBV serology</td><td class="mono text-sm">—</td><td>Active IgM or ↑ IgG</td><td>Herpesvirus reactivation → ↑ vWF, ↓ ADAMTS13</td></tr>
+        <tr><td><strong>CMV IgM/IgG</strong></td><td>CMV serology</td><td class="mono text-sm">—</td><td>Active IgM</td><td>Same mechanism as EBV</td></tr>
+        <tr><td><strong>Ferritin</strong></td><td>Ferritin</td><td class="mono text-sm">004828</td><td>&gt;300 µg/L</td><td>Hyperferritinemia = systemic inflammation</td></tr>
+        <tr><td><strong>LDH</strong></td><td>LDH</td><td class="mono text-sm">004549</td><td>&gt;250 U/L</td><td>Tissue/endothelial injury marker</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 4 — SSRI PROTOCOL
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="ssri">
+  <div class="section-number">Section 04</div>
+  <h2>SSRI Withdrawal Protocol</h2>
+  <p class="section-intro">Typically <strong>Steps 1–2 dominant.</strong> Microvascular dysfunction is <em>functional</em> (not structural) and resolves as the nervous system recalibrates. Most cases stabilize at Steps 1–2 without escalation.</p>
+
+  <h3>Step Priority — SSRI Withdrawal</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-ssri">Step</th>
+          <th class="th-ssri">Focus</th>
+          <th class="th-ssri">Priority</th>
+          <th class="th-ssri">Typical Timeline</th>
+          <th class="th-ssri">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="td-step1"><strong>Step 1 — Endothelium/NO</strong></td>
+          <td>vWF, NO, endothelial stabilization</td>
+          <td><strong>⭐⭐⭐ PRIMARY</strong></td>
+          <td>Days 1–14</td>
+          <td>Address first. Often sufficient.</td>
+        </tr>
+        <tr>
+          <td class="td-step2"><strong>Step 2 — Platelets/PMP</strong></td>
+          <td>Platelet reactivity, PMP shedding</td>
+          <td><strong>⭐⭐⭐ CO-PRIMARY</strong></td>
+          <td>Days 3–21</td>
+          <td>Main source of sensory symptoms.</td>
+        </tr>
+        <tr>
+          <td class="td-step3"><strong>Step 3 — Fibrin Structure</strong></td>
+          <td>Dense clot tendency, fibrinogen</td>
+          <td>⭐ RARE</td>
+          <td>Only if persistent (&gt;4 weeks)</td>
+          <td>Escalate only if labs support.</td>
+        </tr>
+        <tr>
+          <td class="td-step4"><strong>Step 4 — Fibrinolysis</strong></td>
+          <td>α2-antiplasmin, PAI-1</td>
+          <td>⭐ VERY RARE</td>
+          <td>Exceptional cases only</td>
+          <td>Specialist evaluation required.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-label" style="background:var(--step1)">Phase 1 — Immediate (Days 0–7): Stabilize NO / Endothelium</div>
+    <div class="phase-content">
+      <ul>
+        <li><strong>Hydration:</strong> 2–3 L/day + electrolytes (sodium, potassium, magnesium)</li>
+        <li><strong>Sleep:</strong> consistent schedule — key NO/endothelial regulator</li>
+        <li><strong>Pacing:</strong> avoid exertion spikes; gentle walking if tolerated</li>
+        <li><strong>Vitamin K2 (MK-4):</strong> endothelial + Gas6 platelet signaling support</li>
+        <li><strong>Omega-3 fatty acids:</strong> endothelial + platelet stabilization</li>
+        <li><strong>Reduce sympathetic load:</strong> minimize caffeine; breathwork; cool environment</li>
+        <li>If hyperadrenergic: consider clonidine (clinician-guided)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-label" style="background:var(--step2)">Phase 2 — Early Stabilization (Days 7–21): Platelet Stabilization</div>
+    <div class="phase-content">
+      <ul>
+        <li><strong>Omega-3</strong> (higher dose range — clinician-guided)</li>
+        <li><strong>Magnesium glycinate or malate</strong> (stabilizes platelet + vascular tone)</li>
+        <li><strong>Polyphenols:</strong> quercetin-type compounds (anti-platelet + anti-inflammatory)</li>
+        <li>If Step 2 dominant: confirm with MPV, vWF activity</li>
+        <li>Consider low-dose antiplatelet only with clinician decision — weigh bleeding risk if still on SSRI</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-label" style="background:var(--step3)">Phase 3 — Escalation (&gt;4 Weeks, Persistent): Only if labs support</div>
+    <div class="phase-content">
+      <ul>
+        <li>Re-evaluate SSRI taper strategy — slower taper may reduce microvascular burden</li>
+        <li>Anti-inflammatory focus: address sleep, gut inflammation, metabolic stress</li>
+        <li>Consider statin (clinician-guided): pleiotropic endothelial + anti-inflammatory effects</li>
+        <li>Anticoagulation only if fibrinogen clearly elevated AND symptoms persistent</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-danger">
+    <strong>⚠️ Safety Note — SSRI + Antiplatelet Bleeding Risk</strong>
+    SSRIs already deplete platelet serotonin. Combining with antiplatelet agents significantly increases bleeding risk. Any antiplatelet or anticoagulant decision requires clinician assessment. Gastric protection (PPI) is mandatory if antiplatelets are added.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 5 — LONG COVID PROTOCOL
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="covid">
+  <div class="section-number">Section 05</div>
+  <h2>Long COVID / Post-Viral Protocol</h2>
+  <p class="section-intro">Often progresses to <strong>Steps 3–4.</strong> Involves <em>structural</em> changes (amyloid-like fibrin microclots, sustained endothelial injury, possible viral persistence). Multi-layered, longer-duration treatment is typical.</p>
+
+  <h3>Step Priority — Long COVID</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-covid">Step</th>
+          <th class="th-covid">Focus</th>
+          <th class="th-covid">Priority</th>
+          <th class="th-covid">Typical Timeline</th>
+          <th class="th-covid">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="td-step1"><strong>Step 1 — Endothelium/NO</strong></td><td>vWF, NO, endothelial stabilization</td><td><strong>⭐⭐⭐ REQUIRED</strong></td><td>Weeks 1–ongoing</td><td>Necessary but rarely sufficient alone.</td></tr>
+        <tr><td class="td-step2"><strong>Step 2 — Platelets/PMP</strong></td><td>Platelet reactivity, PMP shedding</td><td><strong>⭐⭐ IMPORTANT</strong></td><td>Weeks 1–ongoing</td><td>Usually added early alongside Step 1.</td></tr>
+        <tr><td class="td-step3"><strong>Step 3 — Fibrin Structure</strong></td><td>Dense/amyloid fibrin, fibrinogen</td><td><strong>⭐⭐⭐ CORE</strong></td><td>Weeks 2–6+</td><td>Anticoagulation often indicated here.</td></tr>
+        <tr><td class="td-step4"><strong>Step 4 — Fibrinolysis</strong></td><td>α2-antiplasmin, PAI-1, tPA pathway</td><td><strong>⭐⭐⭐ OFTEN LIMITING</strong></td><td>Months 1–6+</td><td>Often the key barrier to recovery.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-label" style="background:var(--step1)">Layer 1 + 2 — Foundation (Start Immediately)</div>
+    <div class="phase-content">
+      <ul>
+        <li>Endothelial stabilization: vitamin K2, omega-3, polyphenols</li>
+        <li>NO support: L-citrulline or beetroot-derived nitrates (clinician-guided)</li>
+        <li>Platelet stabilization: omega-3 (higher dose), magnesium, quercetin</li>
+        <li><strong>Pacing strategy (CRITICAL):</strong> avoid post-exertional malaise (PEM) crashes — graded exercise therapy is contraindicated</li>
+        <li>Statins (clinician-guided): anti-inflammatory + endothelial + anti-platelet effects</li>
+        <li>Address sleep, metabolic health, viral triggers (EBV/CMV reactivation)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-label" style="background:var(--step3)">Layer 3 — Anticoagulation (Add when fibrinogen ↑ or symptoms persist at 2–4 weeks)</div>
+    <div class="phase-content">
+      <ul>
+        <li>DOACs: Apixaban or Rivaroxaban (physician-prescribed, individualized dosing)</li>
+        <li>Alternative: low-molecular-weight heparin (Enoxaparin) in selected cases</li>
+        <li>Monitor: fibrinogen, D-dimer, vWF activity every 4–6 weeks</li>
+        <li>Duration: typically months — not short courses</li>
+        <li>Antiplatelet + anticoagulant combined: additive bleeding risk — specialist supervision required</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase-card">
+    <div class="phase-label" style="background:var(--step4)">Layer 4 — Fibrinolysis Restoration (Add when α2-AP/PAI-1 ↑ and plateau persists)</div>
+    <div class="phase-content">
+      <ul>
+        <li>Specialist-guided evaluation: obtain α2-antiplasmin and PAI-1 levels</li>
+        <li>Address PAI-1 drivers: metabolic syndrome, cortisol dysregulation, inflammation</li>
+        <li>Advanced fibrinolytic approaches (hospital/specialist): tPA (Alteplase) in selected severe cases only</li>
+        <li>D-dimer may transiently rise as fibrinolysis resumes — interpret in clinical context</li>
+        <li>Reassess herpesvirus status: active EBV/CMV reactivation can suppress ADAMTS13 and perpetuate loop</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Long COVID — Specific Considerations</h3>
+  <div class="alert alert-info">
+    <strong>Factors unique to Long COVID (not SSRI withdrawal):</strong>
+    Spike protein directly alters fibrin structure toward amyloid-like conformation. Persistent viral reservoir may continuously drive endothelial activation. Autoimmune component possible (ADAMTS13 autoantibodies). Mast cell activation syndrome (MCAS) overlap may amplify vWF release. Expected recovery trajectory: months to 1–2 years.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 6 — ESCALATION RULES
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="escalation">
+  <div class="section-number">Section 06</div>
+  <h2>Escalation Rules</h2>
+  <p class="section-intro">Built-in decision logic: <strong>"If X doesn't improve → do Y."</strong></p>
+
+  <h3 style="color:var(--step1)">🟢 Step 1 Escalation Rules</h3>
+
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> vWF remains ↑ after 2 weeks of endothelial support</div>
+    <div class="esc-then"><strong>Then:</strong> Add omega-3 + magnesium (Step 2 support). Re-check vWF at 4 weeks.<div class="esc-note">SSRI: common. LC: expected — broaden to Step 2 immediately.</div></div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> CRP ↑ and not resolving</div>
+    <div class="esc-then"><strong>Then:</strong> Investigate inflammatory drivers: sleep, gut health, viral reactivation, metabolic factors. Consider statin (clinician).<div class="esc-note">Statin: pleiotropic anti-inflammatory + eNOS upregulation.</div></div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> Orthostatic symptoms dominant + not improving</div>
+    <div class="esc-then"><strong>Then:</strong> Evaluate for POTS/dysautonomia overlap. Consider clonidine if hyperadrenergic (clinician).<div class="esc-note">SSRI: autonomic rebound common. LC: dysautonomia often co-exists.</div></div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> NO support interventions insufficient</div>
+    <div class="esc-then"><strong>Then:</strong> Consider ACE inhibitor/ARB or PDE5 inhibitor (Sildenafil) — clinician decision only.<div class="esc-note">Sildenafil: amplifies NO via cGMP — useful in microvascular flow impairment.</div></div>
+  </div>
+
+  <h3 style="color:var(--step2);margin-top:1.5rem">🟠 Step 2 Escalation Rules</h3>
+
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> MPV stays elevated + sensory symptoms persist after 3 weeks</div>
+    <div class="esc-then"><strong>Then:</strong> Consider low-dose antiplatelet (ASA 81mg). Weigh bleeding risk carefully.<div class="esc-note">SSRI: elevated bleeding risk. LC: more commonly indicated.</div></div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> Steps 1 + 2 addressed and symptoms plateau</div>
+    <div class="esc-then"><strong>Then:</strong> Check fibrinogen. If ↑, escalate to Step 3. This is the key decision gate before adding anticoagulation.</div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> PMP-driven amplification suspected (focal/asymmetric sensory)</div>
+    <div class="esc-then"><strong>Then:</strong> Confirm: MPV ↑, vWF ↑, platelet count normal. Consider clopidogrel if ASA inadequate.<div class="esc-note">Combining antiplatelet + anticoagulant requires specialist oversight.</div></div>
+  </div>
+
+  <h3 style="color:var(--step3);margin-top:1.5rem">🔵 Step 3 Escalation Rules</h3>
+
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> Fibrinogen ↑ and symptoms persist &gt;4 weeks despite Steps 1+2</div>
+    <div class="esc-then"><strong>Then:</strong> Add anticoagulation: DOAC (Apixaban/Rivaroxaban) — physician-prescribed.<div class="esc-note">SSRI: rare. LC: commonly required, often for months.</div></div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> Fibrinogen ↓ but symptoms remain</div>
+    <div class="esc-then"><strong>Then:</strong> Advance to Step 4 evaluation (α2-antiplasmin, PAI-1).<div class="esc-note">Fibrin structure may have normalized but fibrinolysis still impaired.</div></div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> D-dimer rises during anticoagulation</div>
+    <div class="esc-then"><strong>Then:</strong> May indicate improved clot breakdown — interpret alongside symptoms. Do NOT automatically increase anticoagulation.<div class="esc-note">Rising D-dimer + improving symptoms = positive signal.</div></div>
+  </div>
+
+  <h3 style="color:var(--step4);margin-top:1.5rem">🔴 Step 4 Escalation Rules</h3>
+
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> α2-antiplasmin and/or PAI-1 elevated + recovery plateau</div>
+    <div class="esc-then"><strong>Then:</strong> Specialist referral required. Advanced fibrinolytic evaluation.<div class="esc-note">tPA (Alteplase) used in selected LC cases — hospital-level decision only.</div></div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> PAI-1 ↑ driven by metabolic syndrome</div>
+    <div class="esc-then"><strong>Then:</strong> Address insulin resistance, weight, cortisol. GLP-1 agonists may reduce PAI-1 (emerging evidence).</div>
+  </div>
+  <div class="escalation-rule">
+    <div class="esc-if"><strong>If:</strong> Persistent despite all steps</div>
+    <div class="esc-then"><strong>Then:</strong> Reassess for: herpesvirus reactivation (EBV/CMV), autoimmune ADAMTS13 antibodies, MCAS overlap.<div class="esc-note">These are upstream perpetuating factors preventing full resolution.</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 7 — DRUG ALGORITHM
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="drugs">
+  <div class="section-number">Section 07</div>
+  <h2>Drug Algorithm</h2>
+  <p class="section-intro">FDA-approved agents mapped to each mechanism step. Sequencing matters: address Steps 1–2 before escalating. All medications require prescriber decision.</p>
+
+  <div class="protocol-header step1-header" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0;">
+    <div>
+      <h3 style="margin:0">Step 1 — Endothelium / NO</h3>
+      <p style="margin:0;color:rgba(255,255,255,0.8);font-size:0.78rem">Goal: ↑ NO bioavailability · ↓ vWF release · ↓ endothelial activation</p>
+    </div>
+  </div>
+  <div class="protocol-body" style="margin-bottom:1rem">
+    <div class="table-wrap" style="margin:0">
+      <table>
+        <thead><tr><th class="th-step1">Drug</th><th class="th-step1">Class</th><th class="th-step1">Mechanism</th><th class="th-step1">Dosing</th><th class="th-step1">SSRI Use</th><th class="th-step1">LC Use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Lisinopril / Enalapril</strong></td><td>ACE inhibitor</td><td>↑ NO, ↓ endothelial activation, ↓ vWF</td><td>Oral daily</td><td><span class="use-pill use-moderate">✓ Applicable</span></td><td><span class="use-pill use-strong">✓✓ Recommended</span></td></tr>
+          <tr><td><strong>Losartan / Valsartan</strong></td><td>ARB</td><td>Endothelial protection, ↑ NO</td><td>Oral daily</td><td><span class="use-pill use-moderate">✓ Applicable</span></td><td><span class="use-pill use-strong">✓✓ Recommended</span></td></tr>
+          <tr><td><strong>Atorvastatin / Rosuvastatin</strong></td><td>Statin</td><td>↓ CRP, ↓ vWF, ↑ eNOS activity, pleiotropic</td><td>Oral daily</td><td><span class="use-pill use-moderate">✓ Applicable</span></td><td><span class="use-pill use-strong">✓✓✓ Core</span></td></tr>
+          <tr><td><strong>Sildenafil</strong></td><td>PDE5 inhibitor</td><td>Amplifies NO via cGMP → microvascular flow</td><td>Oral PRN/daily</td><td><span class="use-pill use-strong">✓✓ Applicable</span></td><td><span class="use-pill use-strong">✓✓ Applicable</span></td></tr>
+          <tr><td><strong>Clonidine</strong></td><td>Alpha-2 agonist</td><td>↓ Sympathetic tone → ↓ vasoconstriction</td><td>Oral low-dose</td><td><span class="use-pill use-strong">✓✓ Hyperadrener.</span></td><td><span class="use-pill use-moderate">✓ Dysautonomia</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="protocol-header step2-header" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0;">
+    <div>
+      <h3 style="margin:0">Step 2 — Platelets / PMPs</h3>
+      <p style="margin:0;color:rgba(255,255,255,0.8);font-size:0.78rem">Goal: ↓ platelet activation · ↓ PMP shedding · ↓ platelet–vWF binding</p>
+    </div>
+  </div>
+  <div class="protocol-body" style="margin-bottom:1rem">
+    <div class="table-wrap" style="margin:0">
+      <table>
+        <thead><tr><th class="th-step2">Drug</th><th class="th-step2">Class</th><th class="th-step2">Mechanism</th><th class="th-step2">Dosing</th><th class="th-step2">SSRI Use</th><th class="th-step2">LC Use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aspirin 81 mg</strong></td><td>Antiplatelet (COX-1)</td><td>↓ Thromboxane A2 → ↓ platelet activation</td><td>Oral daily</td><td><span class="use-pill use-caution">⚠️ Bleeding risk</span></td><td><span class="use-pill use-strong">✓✓ Applicable</span></td></tr>
+          <tr><td><strong>Clopidogrel</strong></td><td>Antiplatelet (P2Y12)</td><td>↓ ADP-mediated platelet activation</td><td>Oral daily</td><td><span class="use-pill use-caution">⚠️ Bleeding risk</span></td><td><span class="use-pill use-moderate">✓ With ASA</span></td></tr>
+          <tr><td><strong>Statin (dual role)</strong></td><td>Pleiotropic</td><td>Also reduces platelet reactivity</td><td>See Step 1</td><td><span class="use-pill use-moderate">✓ Applicable</span></td><td><span class="use-pill use-strong">✓✓ Recommended</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="protocol-header step3-header" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0;">
+    <div>
+      <h3 style="margin:0">Step 3 — Fibrin Structure</h3>
+      <p style="margin:0;color:rgba(255,255,255,0.8);font-size:0.78rem">Goal: ↓ thrombin → less dense fibrin networks</p>
+    </div>
+  </div>
+  <div class="protocol-body" style="margin-bottom:1rem">
+    <div class="table-wrap" style="margin:0">
+      <table>
+        <thead><tr><th class="th-step3">Drug</th><th class="th-step3">Class</th><th class="th-step3">Mechanism</th><th class="th-step3">Dosing</th><th class="th-step3">SSRI Use</th><th class="th-step3">LC Use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Apixaban</strong></td><td>DOAC (Xa inhibitor)</td><td>↓ Thrombin → less dense fibrin networks</td><td>Oral BID</td><td><span class="use-pill use-rare">Rare</span></td><td><span class="use-pill use-strong">✓✓✓ Core</span></td></tr>
+          <tr><td><strong>Rivaroxaban</strong></td><td>DOAC (Xa inhibitor)</td><td>↓ Thrombin generation</td><td>Oral daily/BID</td><td><span class="use-pill use-rare">Rare</span></td><td><span class="use-pill use-strong">✓✓✓ Core</span></td></tr>
+          <tr><td><strong>Enoxaparin</strong></td><td>LMWH</td><td>↓ Thrombin, anti-Xa; preferred in hospital</td><td>SC injection</td><td><span class="use-pill use-rare">Rare</span></td><td><span class="use-pill use-strong">✓✓ Applicable</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="protocol-header step4-header" style="border-radius:var(--radius-lg) var(--radius-lg) 0 0;">
+    <div>
+      <h3 style="margin:0">Step 4 — Fibrinolysis Shutdown</h3>
+      <p style="margin:0;color:rgba(255,255,255,0.8);font-size:0.78rem">Goal: restore controlled fibrinolysis — requires specialist guidance</p>
+    </div>
+  </div>
+  <div class="protocol-body" style="margin-bottom:1rem">
+    <div class="table-wrap" style="margin:0">
+      <table>
+        <thead><tr><th class="th-step4">Drug</th><th class="th-step4">Class</th><th class="th-step4">Mechanism</th><th class="th-step4">Dosing</th><th class="th-step4">Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Alteplase (tPA)</strong></td><td>Fibrinolytic</td><td>Converts plasminogen → plasmin → breaks fibrin</td><td>IV (hospital only)</td><td>SSRI: very rare. LC: specialist decision. Hospital-level only.</td></tr>
+          <tr><td><strong>GLP-1 agonists</strong></td><td>Metabolic (emerging)</td><td>May reduce PAI-1; address insulin resistance</td><td>Individualized</td><td>Both conditions — emerging evidence for PAI-1 reduction.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="alert alert-danger">
+    <strong>⚠️ Safety Flags for Drug Combinations</strong>
+    (1) SSRIs deplete platelet serotonin → additive bleeding risk with any antiplatelet. (2) Antiplatelet + anticoagulant combined requires specialist supervision. (3) tPA is hospital/specialist use only — not outpatient. (4) PDE5 inhibitors contraindicated with nitrates.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 8 — SYMPTOM MAPPER
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="mapper">
+  <div class="section-number">Section 08</div>
+  <h2>Symptom → Step Mapper</h2>
+  <p class="section-intro">Bedside rapid identification: find dominant symptom cluster → identify step → initiate protocol.</p>
+
+  <div class="mapper-grid">
+    <div class="mapper-card step1-mapper">
+      <div class="mapper-head">
+        <div class="mapper-step-num">1</div>
+        <div>
+          <div class="mapper-head-title">Endothelium / NO — Flow Instability</div>
+          <div class="mapper-head-sub">Think: vasoconstriction / NO deficit · vWF ↑ · CRP ↑</div>
+        </div>
+      </div>
+      <div class="mapper-body">
+        <div class="mapper-symptoms">
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step1)"></div>Diffuse head pressure (often back of head)</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step1)"></div>Light sensitivity (not true migraine aura)</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step1)"></div>Orthostatic lightheadedness</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step1)"></div>Heat intolerance · air hunger</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step1)"></div>Fluctuating BP / pulse · global, not focal</div>
+        </div>
+        <div class="mapper-actions">
+          <div class="mapper-action-label">First Actions</div>
+          <div class="mapper-action-item">NO support: hydration, pacing, sleep</div>
+          <div class="mapper-action-item">Vitamin K2, Omega-3, reduce sympathetic load</div>
+          <div class="mapper-action-item">Clinician: consider ACE/ARB, statin</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mapper-card step2-mapper">
+      <div class="mapper-head">
+        <div class="mapper-step-num">2</div>
+        <div>
+          <div class="mapper-head-title">Platelet Amplification — Microvascular Hotspots</div>
+          <div class="mapper-head-sub">Think: platelet clustering · MPV ↑ · focal pattern</div>
+        </div>
+      </div>
+      <div class="mapper-body">
+        <div class="mapper-symptoms">
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step2)"></div>Pressure behind one eye / temple (asymmetric)</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step2)"></div>Visual brightness / contrast exaggeration ("HD")</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step2)"></div>Sound sensitivity / distortion</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step2)"></div>Derealization / "split perception"</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step2)"></div>Tingling or buzzing sensations</div>
+        </div>
+        <div class="mapper-actions">
+          <div class="mapper-action-label">First Actions</div>
+          <div class="mapper-action-item">Omega-3 + Magnesium</div>
+          <div class="mapper-action-item">Polyphenols (quercetin)</div>
+          <div class="mapper-action-item">Clinician: ASA 81mg (weigh risk carefully)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mapper-card step3-mapper">
+      <div class="mapper-head">
+        <div class="mapper-step-num">3</div>
+        <div>
+          <div class="mapper-head-title">Fibrin / Microflow Limitation</div>
+          <div class="mapper-head-sub">Think: capillary obstruction · fibrinogen ↑ · PEM pattern</div>
+        </div>
+      </div>
+      <div class="mapper-body">
+        <div class="mapper-symptoms">
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step3)"></div>Brain fog / word-finding difficulty</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step3)"></div>Mental fatigue disproportionate to effort</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step3)"></div>Exercise intolerance / post-exertional malaise</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step3)"></div>"Low oxygen" feeling without hypoxia</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step3)"></div>Delayed recovery hours/days after exertion</div>
+        </div>
+        <div class="mapper-actions">
+          <div class="mapper-action-label">First Actions</div>
+          <div class="mapper-action-item">Pacing — CRITICAL, avoid PEM crashes</div>
+          <div class="mapper-action-item">Anti-inflammatory focus (diet, sleep, metabolic)</div>
+          <div class="mapper-action-item">Clinician: DOAC if labs support and persistent</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mapper-card step4-mapper">
+      <div class="mapper-head">
+        <div class="mapper-step-num">4</div>
+        <div>
+          <div class="mapper-head-title">Fibrinolysis Shutdown — Stuck State</div>
+          <div class="mapper-head-sub">Think: α2-AP ↑ · PAI-1 ↑ · D-dimer paradoxically low</div>
+        </div>
+      </div>
+      <div class="mapper-body">
+        <div class="mapper-symptoms">
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step4)"></div>Plateaued recovery despite partial improvement</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step4)"></div>Waxing/waning without clear triggers</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step4)"></div>Cold extremities / poor peripheral circulation</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step4)"></div>Symptoms don't clear with rest</div>
+          <div class="mapper-sym-item"><div class="mapper-sym-dot" style="background:var(--step4)"></div>Morning heaviness / "stuck" sensation</div>
+        </div>
+        <div class="mapper-actions">
+          <div class="mapper-action-label">First Actions</div>
+          <div class="mapper-action-item">Evaluate α2-antiplasmin, PAI-1</div>
+          <div class="mapper-action-item">Address metabolic drivers (insulin resistance)</div>
+          <div class="mapper-action-item">Specialist referral + rule out viral reactivation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>⚡ Ultra-Fast Bedside Shortcut</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-dark">Symptom Pattern</th>
+          <th class="th-dark" style="text-align:center;width:140px">Dominant Step</th>
+          <th class="th-dark">First Move</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Global pressure + light sensitivity</td><td style="text-align:center"><span style="background:var(--step1);color:white;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.75rem;font-weight:700">→ Step 1</span></td><td>NO + endothelial support</td></tr>
+        <tr><td>Focal pressure + sensory overload</td><td style="text-align:center"><span style="background:var(--step2);color:white;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.75rem;font-weight:700">→ Step 2</span></td><td>Omega-3 + Magnesium</td></tr>
+        <tr><td>Fatigue + brain fog + PEM</td><td style="text-align:center"><span style="background:var(--step3);color:white;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.75rem;font-weight:700">→ Step 3</span></td><td>Pacing + anti-inflammatory</td></tr>
+        <tr><td>Plateau + stuck / persistent</td><td style="text-align:center"><span style="background:var(--step4);color:white;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.75rem;font-weight:700">→ Step 4</span></td><td>Specialist + fibrinolysis eval</td></tr>
+        <tr><td>Mixed presentation</td><td style="text-align:center"><span style="background:var(--ink);color:white;padding:0.2rem 0.6rem;border-radius:100px;font-size:0.75rem;font-weight:700">→ Score all</span></td><td>Treat highest-scoring step first</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>SSRI Withdrawal vs. Long COVID — Side-by-Side</h3>
+  <div class="table-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th style="background:var(--ssri);color:white;text-align:center">SSRI Withdrawal</th>
+          <th style="background:var(--covid);color:white;text-align:center">Long COVID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Fibrin structure</td><td style="background:var(--ssri-light)">Likely normal; functional</td><td style="background:var(--covid-light)">Amyloid-like; protease-resistant</td></tr>
+        <tr><td>Platelets</td><td style="background:var(--ssri-light)">Dysregulated / unstable</td><td style="background:var(--covid-light)">Hyperactivated (structural)</td></tr>
+        <tr><td>NO signaling</td><td style="background:var(--ssri-light)">Fluctuating / reduced</td><td style="background:var(--covid-light)">Persistently reduced</td></tr>
+        <tr><td>Endothelium</td><td style="background:var(--ssri-light)">Transiently stressed</td><td style="background:var(--covid-light)">Damaged / inflamed</td></tr>
+        <tr><td>Microcirculation</td><td style="background:var(--ssri-light)">Intermittently impaired</td><td style="background:var(--covid-light)">Persistently impaired</td></tr>
+        <tr><td>Step 1 priority</td><td style="background:var(--ssri-light);font-weight:700;color:var(--step1)">⭐⭐⭐ Primary</td><td style="background:var(--covid-light);font-weight:700;color:var(--step1)">⭐⭐⭐ Required</td></tr>
+        <tr><td>Step 2 priority</td><td style="background:var(--ssri-light);font-weight:700;color:var(--step2)">⭐⭐⭐ Co-primary</td><td style="background:var(--covid-light);font-weight:700;color:var(--step2)">⭐⭐ Important</td></tr>
+        <tr><td>Step 3 priority</td><td style="background:var(--ssri-light);color:var(--ink-light)">⭐ Rare</td><td style="background:var(--covid-light);font-weight:700;color:var(--step3)">⭐⭐⭐ Core</td></tr>
+        <tr><td>Step 4 priority</td><td style="background:var(--ssri-light);color:var(--ink-light)">⭐ Very rare</td><td style="background:var(--covid-light);font-weight:700;color:var(--step4)">⭐⭐⭐ Often limiting</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 9 — MONITORING
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="monitoring">
+  <div class="section-number">Section 09</div>
+  <h2>Treatment Monitoring — 8-Week Tracker</h2>
+  <p class="section-intro">Markers normalize in a predictable sequence. Patients often feel better <strong>before</strong> late markers normalize. Track this order: Endothelium → Platelets → Fibrin → Fibrinolysis.</p>
+
+  <div class="timeline-grid">
+    <div class="timeline-col">
+      <div class="timeline-head" style="background:var(--step1)">Earliest Response<br><span style="font-weight:400;font-size:0.72rem">Days to ~1 week</span></div>
+      <div class="timeline-body">
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step1)">↓</span>vWF activity falls</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step1)">↓</span>CRP decreases</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step1)">↓</span>Symptoms less severe</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step1)">↓</span>MPV begins to normalize</div>
+      </div>
+    </div>
+    <div class="timeline-col" style="border-left:1px solid var(--rule)">
+      <div class="timeline-head" style="background:var(--step2)">Intermediate<br><span style="font-weight:400;font-size:0.72rem">Weeks 1–4</span></div>
+      <div class="timeline-body">
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step2)">↓</span>Fibrinogen decreases</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step2)">↑</span>vWF:ADAMTS13 ratio improving</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step2)">↓</span>Symptom consistency improves</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step2)">↓</span>MPV normalized</div>
+      </div>
+    </div>
+    <div class="timeline-col" style="border-left:1px solid var(--rule)">
+      <div class="timeline-head" style="background:var(--step4)">Late Resolution<br><span style="font-weight:400;font-size:0.72rem">Weeks 4–12+</span></div>
+      <div class="timeline-body">
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step4)">↓</span>α2-antiplasmin normalizes</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step4)">↓</span>PAI-1 falls</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step4)">~</span>D-dimer may transiently ↑</div>
+        <div class="timeline-item"><span class="timeline-arrow" style="color:var(--step4)">✓</span>Full symptom resolution</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    <strong>⚠️ D-Dimer Rising During Treatment</strong>
+    If D-dimer rises during anticoagulant treatment, this may indicate improved clot breakdown — a <em>therapeutic signal</em>, not a complication. Interpret alongside symptom trajectory. Do NOT automatically increase anticoagulation based on D-dimer alone.
+  </div>
+
+  <h3>8-Week Tracking Table</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-dark">Marker (units)</th>
+          <th class="th-dark" style="text-align:center;width:55px">Step</th>
+          <th class="th-dark" style="text-align:center">Baseline</th>
+          <th class="th-dark" style="text-align:center">Week 2</th>
+          <th class="th-dark" style="text-align:center">Week 4</th>
+          <th class="th-dark" style="text-align:center">Week 6</th>
+          <th class="th-dark" style="text-align:center">Week 8</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>vWF Activity (%)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step1)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>ADAMTS13 Activity (%)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step1)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>hs-CRP (mg/L)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step1)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>MPV (fL)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step2)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Platelet Count (×10⁹/L)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step2)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Fibrinogen (g/L)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step3)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>D-Dimer (mg/L FEU)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step3)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>α2-Antiplasmin (%)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step4)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>PAI-1 (ng/mL)</td><td style="text-align:center"><span class="track-step-dot" style="background:var(--step4)"></span></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>Symptom Score (0–10)</td><td style="text-align:center">—</td><td></td><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="alert alert-info">
+    <strong>Monitoring Cadence:</strong> Every 4–6 weeks initially · Space to every 8–12 weeks once stable · Long COVID: extend tracking to 6–12 months · Add α2-antiplasmin and PAI-1 only if plateau persists.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SECTION 10 — PATIENT ASSESSMENT FORM
+══════════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="assessment">
+  <div class="section-number">Section 10</div>
+  <h2>Patient Assessment Form</h2>
+  <p class="section-intro">Complete at each visit. Use the scoring system (Section 1) to assign the dominant step.</p>
+
+  <h3>Patient Information</h3>
+  <div class="form-grid-3">
+    <div class="form-field"><label>Patient Name</label><input type="text" placeholder="Full name"></div>
+    <div class="form-field"><label>Date of Birth</label><input type="text" placeholder="DD/MM/YYYY"></div>
+    <div class="form-field"><label>Visit Date</label><input type="text" placeholder="DD/MM/YYYY"></div>
+  </div>
+  <div class="form-grid-2">
+    <div class="form-field"><label>Clinician</label><input type="text" placeholder="Name / designation"></div>
+    <div class="form-field"><label>Referring Diagnosis</label><input type="text" placeholder="e.g. SSRI withdrawal / Long COVID / Other"></div>
+  </div>
+
+  <h3>Condition Pattern</h3>
+  <div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin:0.5rem 0 1.25rem">
+    <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer"><input type="checkbox"> SSRI Withdrawal</label>
+    <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer"><input type="checkbox"> Long COVID / Post-viral</label>
+    <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer"><input type="checkbox"> Other post-viral</label>
+    <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer"><input type="checkbox"> Unknown / Mixed</label>
+  </div>
+
+  <h3>Symptom Checklist</h3>
+  <p class="text-sm text-muted" style="margin-bottom:0.75rem">Check all symptoms present. Count totals per step for scoring.</p>
+  <div class="checklist-grid">
+    <div class="check-group check-group-s1">
+      <div class="check-group-header">
+        <span>Step 1 — Endothelium / NO</span>
+        <span class="check-count-label">Count: ____/6</span>
+      </div>
+      <div class="check-group-body">
+        <label class="check-item"><input type="checkbox"><label>Diffuse head pressure</label></label>
+        <label class="check-item"><input type="checkbox"><label>Light sensitivity</label></label>
+        <label class="check-item"><input type="checkbox"><label>Orthostatic dizziness</label></label>
+        <label class="check-item"><input type="checkbox"><label>Heat intolerance</label></label>
+        <label class="check-item"><input type="checkbox"><label>Air hunger / BP fluctuation</label></label>
+        <label class="check-item"><input type="checkbox"><label>Fatigue after standing</label></label>
+      </div>
+    </div>
+
+    <div class="check-group check-group-s2">
+      <div class="check-group-header">
+        <span>Step 2 — Platelets / PMPs</span>
+        <span class="check-count-label">Count: ____/5</span>
+      </div>
+      <div class="check-group-body">
+        <label class="check-item"><input type="checkbox"><label>Pressure behind one eye / temple</label></label>
+        <label class="check-item"><input type="checkbox"><label>Visual brightness / contrast distortion</label></label>
+        <label class="check-item"><input type="checkbox"><label>Sound sensitivity</label></label>
+        <label class="check-item"><input type="checkbox"><label>Derealization / "split perception"</label></label>
+        <label class="check-item"><input type="checkbox"><label>Tingling / buzzing sensations</label></label>
+      </div>
+    </div>
+
+    <div class="check-group check-group-s3">
+      <div class="check-group-header">
+        <span>Step 3 — Fibrin / Microflow</span>
+        <span class="check-count-label">Count: ____/5</span>
+      </div>
+      <div class="check-group-body">
+        <label class="check-item"><input type="checkbox"><label>Brain fog / word-finding difficulty</label></label>
+        <label class="check-item"><input type="checkbox"><label>Mental fatigue disproportionate to effort</label></label>
+        <label class="check-item"><input type="checkbox"><label>Exercise intolerance / PEM</label></label>
+        <label class="check-item"><input type="checkbox"><label>"Low oxygen" feeling</label></label>
+        <label class="check-item"><input type="checkbox"><label>Post-exertional worsening</label></label>
+      </div>
+    </div>
+
+    <div class="check-group check-group-s4">
+      <div class="check-group-header">
+        <span>Step 4 — Fibrinolysis Shutdown</span>
+        <span class="check-count-label">Count: ____/5</span>
+      </div>
+      <div class="check-group-body">
+        <label class="check-item"><input type="checkbox"><label>Plateau / stuck recovery</label></label>
+        <label class="check-item"><input type="checkbox"><label>Waxing/waning symptoms</label></label>
+        <label class="check-item"><input type="checkbox"><label>Cold extremities</label></label>
+        <label class="check-item"><input type="checkbox"><label>Symptoms don't clear with rest</label></label>
+        <label class="check-item"><input type="checkbox"><label>Morning heaviness</label></label>
+      </div>
+    </div>
+  </div>
+
+  <h3>Auto-Score Result</h3>
+  <div class="score-result-grid">
+    <div class="score-result-col score-s1"><label>Step 1 Score</label><input type="text" placeholder="/6"></div>
+    <div class="score-result-col score-s2"><label>Step 2 Score</label><input type="text" placeholder="/6"></div>
+    <div class="score-result-col score-s3"><label>Step 3 Score</label><input type="text" placeholder="/6"></div>
+    <div class="score-result-col score-s4"><label>Step 4 Score</label><input type="text" placeholder="/6"></div>
+    <div class="score-result-col score-dom"><label>Dominant Step</label><input type="text" placeholder="1/2/3/4"></div>
+  </div>
+
+  <h3>Lab Results</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="th-dark">Test</th>
+          <th class="th-dark">Value</th>
+          <th class="th-dark">Threshold</th>
+          <th class="th-dark">Flag ↑/↓/N</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>vWF Antigen (%)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;150%</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>vWF Activity (%)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;150%</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>ADAMTS13 (%)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&lt;60%</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>D-Dimer (mg/L)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;0.5</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>Fibrinogen (g/L)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;4.0</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>MPV (fL)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;11</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>hs-CRP (mg/L)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;3</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>α2-Antiplasmin (%)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;120%</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>PAI-1 (ng/mL)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;50</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>Platelet Count (×10⁹/L)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>Normal</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+        <tr><td>LDH (U/L)</td><td><input type="text" style="width:100%;border:none;background:transparent;font-size:0.82rem;font-family:inherit;padding:0.1rem 0"></td><td>&gt;250</td><td><input type="text" style="width:60px;border:1px solid var(--rule);border-radius:3px;padding:0.15rem 0.3rem;font-size:0.78rem;text-align:center"></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Clinical Plan</h3>
+  <div class="form-grid-2">
+    <div class="form-field"><label>Current step(s) being treated</label><input type="text" placeholder="e.g. Step 1 + 2"></div>
+    <div class="form-field"><label>Escalation trigger (if met)</label><input type="text" placeholder="e.g. fibrinogen >4.0 at 4 weeks → add DOAC"></div>
+  </div>
+  <div class="form-field" style="margin-bottom:0.75rem"><label>Medications initiated / adjusted</label><textarea placeholder="Drug, dose, rationale"></textarea></div>
+  <div class="form-grid-2">
+    <div class="form-field"><label>Follow-up / next labs</label><input type="text" placeholder="Date and panel"></div>
+    <div class="form-field"><label>Next visit date</label><input type="text" placeholder="DD/MM/YYYY"></div>
+  </div>
+  <div class="form-field" style="margin-bottom:1rem"><label>Notes</label><textarea placeholder="Clinical observations, patient-reported changes, adverse effects" style="min-height:90px"></textarea></div>
+
+  <h3>Quick Safety Flags</h3>
+  <div class="safety-flags">
+    <label class="safety-flag"><input type="checkbox"><label>Currently on SSRI → <strong>caution with any antiplatelet (bleeding risk)</strong></label></label>
+    <label class="safety-flag"><input type="checkbox"><label>Antiplatelet + anticoagulant combination → <strong>specialist supervision required</strong></label></label>
+    <label class="safety-flag"><input type="checkbox"><label>Rapid worsening or focal neurological deficit → <strong>urgent evaluation</strong></label></label>
+    <label class="safety-flag"><input type="checkbox"><label>On nitrates → <strong>contraindicated with PDE5 inhibitors (Sildenafil)</strong></label></label>
+  </div>
+</section>
+
+<footer>
+  <p style="color:rgba(255,255,255,0.6);margin-bottom:0.5rem;font-weight:600">Microvascular Dysfunction — Clinical Workflow Pack</p>
+  <p>For clinician use only · Framework based on mechanistic research · No clinical trials have validated this protocol as a complete system</p>
+  <p style="margin-top:0.5rem">All treatment decisions require individual clinician assessment of patient history, contraindications, and risk factors</p>
+  <p style="margin-top:0.5rem"><a href="../index.html" style="color:#4FC3F7;text-decoration:none;">← All Articles</a></p>
+</footer>
+
+</main>
+</body>
+</html>
